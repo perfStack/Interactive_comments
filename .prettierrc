@@ -1,0 +1,11 @@
+{
+  "useTabs": false,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 100,
+  "svelteSortOrder": "options-styles-scripts-markup",
+  "svelteStrictMode": true,
+  "svelteBracketNewLine": false,
+  "svelteAllowShorthand": false,
+  "svelteIndentScriptAndStyle": true
+}

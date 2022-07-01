@@ -1,0 +1,73 @@
+/* stylelint-disable custom-property-pattern */
+:root {
+  --clr-pri-moderateBlue: hsl(238deg 40% 52%);
+  --clr-pri-softRed: hsl(358deg 79% 66%);
+  --clr-pri-harshRed: hsl(358deg 100% 62%);
+  --clr-pri-lightGrayBlue: hsl(239deg 57% 85%);
+  --clr-pri-paleRed: hsl(357deg 100% 86%);
+  --clr-nutrl-darkBlue: hsl(212deg 24% 26%);
+  --clr-nutrl-grayBlue: hsl(211deg 10% 45%);
+  --clr-nutrl-lightGray: hsl(223deg 19% 93%);
+  --clr-nutrl-vlightGray: hsl(228deg 33% 97%);
+  --clr-nutrl-pureWhite: hsl(0deg 0% 100%);
+  --brdr-radius: 8px;
+  --comments-cont-width: 60rem;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Rubik;
+  src: local('Rubik'), url('/fonts/Rubik-VariableFont_wght.woff2') format('woff2'),
+    url('/fonts/Rubik-VariableFont_wght.woff') format('woff'),
+    url('/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
+}
+
+html {
+  font-size: 62.5%;
+  font-family: Rubik, sans-serif;
+}
+
+body {
+  background-color: var(--clr-nutrl-vlightGray);
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 140rem;
+}
+
+p {
+  font-size: 1.6rem;
+  color: var(--clr-nutrl-darkBlue);
+  line-height: 1.4;
+}
+
+button {
+  background-color: transparent;
+}
+
+.hidden {
+  display: none;
+}
+
+.visually-hidden {
+  @supports not (clip-path: polygon(0 0, 0 0, 0 0)) {
+    clip: rect(0 0 0 0) !important;
+  }
+  /* 
+  position: absolute to take the content out of flow
+  Height and width are set to 1px/.1rem so that it is accessible to screen readers
+  // using margin -1px/-.1rem and other attributes ensures content is hidden from sighted users
+  */
+  border: 0 !important;
+  clip-path: polygon(0 0, 0 0, 0 0) !important;
+  height: 1px !important;
+  margin: 1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  position: absolute !important;
+  width: 1px !important;
+}
+
+/* Change default focus */
+*:focus {
+  outline: var(--clr-pri-moderateBlue) solid 2px;
+}
