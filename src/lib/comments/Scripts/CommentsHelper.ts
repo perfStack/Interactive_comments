@@ -142,9 +142,10 @@ export function removeComment(commentArr: BaseCommentType[], commentPositionId: 
  * Function to update the new comment.position as well as comment.id
  * of the remaining comments in the array.
  * @param indexToStart - The position of the deleted comment
- * @param commentObj
+ * @param commentObj - The parent comment containing the comment to modify
+ * @param position - The position of the comment to move up
  */
-function moveRemainingPostUp(indexToStart: number, commentObj: BaseCommentType) {
+function moveRemainingPostUp(indexToStart: number, commentObj: BaseCommentType, position = 1) {
   try {
     // Start from the position of the last index(position which belonged to the deleted comment)
     // loop through the messages from there on and decrement the message.id by 1
@@ -157,8 +158,18 @@ function moveRemainingPostUp(indexToStart: number, commentObj: BaseCommentType) 
       messageIdGenerator.updateId(commentObj.replies[i]);
       // Update the position of the comment
       // Decrement the last index by 1 and then convert it to string and then join it back with '.'
-      reply[reply.length - 1] = (parseInt(reply[reply.length - 1], 10) - 1).toString();
+      reply[reply.length - position] = (
+        parseInt(reply[reply.length - position], 10) - 1
+      ).toString();
       positionIdGenerator.updatePosition(commentObj.replies[i], reply.join('.'));
+
+      // Recursive call to update the nested comments
+      // Increase the position by 1 to move up the nested comments position as
+      // only the parent's position has changed eg 2.2 -> 2.1, 2.2.2 -> 2.1.2 ✔️
+      // otherwise the nested comments will be moved eg 2.2 -> 2.1, 2.2.2 -> 2.2.1 ❌
+      if (commentObj.replies[i].replies.length > 0) {
+        moveRemainingPostUp(0, commentObj.replies[i], position + 1);
+      }
     }
   } catch (e) {
     console.error(e);

@@ -61,6 +61,7 @@
    */
   function modifyScoreHandler() {
     commentsData = commentsData;
+    setDataToLocalStorage(LOCAL_STORAGE_KEY.commentsData, JSON.stringify(commentsData));
   }
 </script>
 
