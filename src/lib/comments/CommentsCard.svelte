@@ -6,11 +6,11 @@
   import CardIconShake from '$lib/components/CardIconShake.svelte';
   import AvatarImg from '$lib/components/AvatarImg.svelte';
   import NewComment from './NewComment.svelte';
-  import { moveCursorToTheEnd } from './CommentsHelper';
+  import { moveCursorToTheEnd } from './Scripts/CommentsHelper';
   import CustomButton from '$lib/components/CustomButton.svelte';
   import Incrementer from '$lib/counter/Incrementer.svelte';
   import Decrementer from '$lib/counter/Decrementer.svelte';
-  import { thisPostDataContextKey } from './Comments-contenxt';
+  import { thisPostDataContextKey } from './Scripts/Comments-contenxt';
 
 
   export let commentData: BaseCommentType | ReplyCommentType;

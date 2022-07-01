@@ -2,7 +2,7 @@
   import type { BaseCommentType, ReplyCommentType } from '$lib/data/data-store_types';
 
   import { createEventDispatcher, getContext } from 'svelte';
-  import { thisPostDataContextKey } from '$lib/comments/Comments-contenxt';
+  import { thisPostDataContextKey } from '../comments/Scripts/Comments-contenxt';
   import { messageIdGenerator } from '$lib/data/RandomGenerator';
 
   const commentsData: BaseCommentType | ReplyCommentType = getContext(thisPostDataContextKey);

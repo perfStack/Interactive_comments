@@ -1,4 +1,4 @@
-import type { BaseCommentType, CommentDataType, UserType } from './data-store_types';
+import type { BaseCommentType, UserType } from './data-store_types';
 import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
 
@@ -26,7 +26,7 @@ const hardCodedData: {
       position: 19625,
       content:
         // eslint-disable-next-line max-len
-        'Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You\'ve nailed the design and the responsiveness at various breakpoints works really well.',
+        "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.",
       createdAt: '1 month ago',
       score: 12,
       user: {
@@ -43,7 +43,7 @@ const hardCodedData: {
       position: 19589,
       content:
         // eslint-disable-next-line max-len
-        'Woah, your project looks awesome! How long have you been coding for? I\'m still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!',
+        "Woah, your project looks awesome! How long have you been coding for? I'm still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!",
       createdAt: '2 weeks ago',
       score: 5,
       user: {
@@ -59,7 +59,7 @@ const hardCodedData: {
           position: 14091,
           content:
             // eslint-disable-next-line max-len
-            'If you\'re still new, I\'d recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It\'s very tempting to jump ahead but lay a solid foundation first.',
+            "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
           createdAt: '1 week ago',
           score: 4,
           replyingTo: 'maxblagun',
@@ -77,7 +77,7 @@ const hardCodedData: {
           position: 15068,
           content:
             // eslint-disable-next-line max-len
-            'I couldn\'t agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.',
+            "I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
           createdAt: '2 days ago',
           score: 2,
           replyingTo: 'ramsesmiron',
@@ -156,12 +156,12 @@ function initialStoreData(): [UserType, BaseCommentType[]] | undefined {
     } else {
       if (localStorage) {
         setDataToLocalStorage(
-            LOCAL_STORAGE_KEY.currentUser,
-            JSON.stringify(hardCodedData.currentUser),
+          LOCAL_STORAGE_KEY.currentUser,
+          JSON.stringify(hardCodedData.currentUser),
         );
         setDataToLocalStorage(
-            LOCAL_STORAGE_KEY.commentsData,
-            JSON.stringify(hardCodedData.comments),
+          LOCAL_STORAGE_KEY.commentsData,
+          JSON.stringify(hardCodedData.comments),
         );
       }
       return [hardCodedData.currentUser, hardCodedData.comments];

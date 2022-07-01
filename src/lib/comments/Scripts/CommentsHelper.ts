@@ -1,5 +1,7 @@
-import type { BaseCommentType, ReplyCommentType, UserType } from '$lib/data/data-store_types';
-import { messageIdGenerator, positionIdGenerator } from '../data/RandomGenerator';
+import type { BaseCommentType, ReplyCommentType, UserType } from '../../data/data-store_types';
+import { messageIdGenerator, positionIdGenerator } from '../../data/RandomGenerator';
+
+// todo - updated score to be set to local storage
 
 /**
  * function to return the comment Object using the supplied commentId
@@ -7,8 +9,8 @@ import { messageIdGenerator, positionIdGenerator } from '../data/RandomGenerator
  * @param commentPositionId - The id of the comment whose object is to be returned
  */
 export function findComment(
-    commentArr: BaseCommentType[],
-    commentPositionId: number,
+  commentArr: BaseCommentType[],
+  commentPositionId: number,
 ): [BaseCommentType | ReplyCommentType, boolean] {
   try {
     // Split the comment as it can be a nested one, with each number denoting the nested index.
@@ -36,7 +38,7 @@ export function findComment(
         commentObj = baseCommentObj.replies[messageIndex];
         if (!commentObj) {
           throw new Error(
-              `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
+            `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
           );
         }
       }
@@ -53,9 +55,9 @@ export function findComment(
  * @param commentPosition - The id of the comment whose parent is to be found
  * @returns
  */
-function findParentComment(
-    commentArr: BaseCommentType[],
-    commentPosition: string,
+export function findParentComment(
+  commentArr: BaseCommentType[],
+  commentPosition: string,
 ): BaseCommentType | ReplyCommentType {
   // Split the comment as it can be a nested one, with each number denoting the nested index.
   // eg 1.4.3
@@ -79,7 +81,7 @@ function findParentComment(
 
       if (!commentObj) {
         throw new Error(
-            `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
+          `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
         );
       }
     }
@@ -89,14 +91,22 @@ function findParentComment(
   return commentObj;
 }
 
+function deleteMessageFromMemory(messageObj: number) {
+  // Remove the comment id from the available pool of comment ids
+  messageIdGenerator.deleteId(messageObj);
+  // Remove the comment position from the available pool of comment positions
+  positionIdGenerator.deletePosition(messageObj);
+}
+
 /**
  * Function to remove a comment from the comments array.
  * @param commentArr - The array of comments
- * @param commentPosition Unique id of the comment to be removed
+ * @param commentPositionId Unique position id of the comment to be removed
  */
-export function removeComment(commentArr: BaseCommentType[], commentPosition: string) {
+export function removeComment(commentArr: BaseCommentType[], commentPositionId: string) {
   // Split the comment as it can be a nested one, with each number denoting the nested index.
   // eg 1.4.3
+  const commentPosition = positionIdGenerator.getPosition(parseInt(commentPositionId, 10));
   const commentIdArr = commentPosition.split('.');
   const isBaseComment = commentIdArr.length === 1;
   // Check if the index of base message checks out ot be valid in existing arr
@@ -112,8 +122,8 @@ export function removeComment(commentArr: BaseCommentType[], commentPosition: st
   // WARNING - This is a very dangerous operation, as it will remove the parent comment
   // from the array as well as remove the entire nested comment array.
   if (!isBaseComment) {
-    // Remove the comment id from the available pool
-    messageIdGenerator.deleteId(commentObj.replies[lastIndex].id);
+    // Remove the comment id from the available pool of comment ids
+    deleteMessageFromMemory(commentObj.replies[lastIndex].id);
     // Remove the comment from the replies array
     commentObj.replies.splice(lastIndex, 1);
     // Update the remaining comments position to reflect the new position
@@ -157,9 +167,9 @@ function moveRemainingPostUp(indexToStart: number, commentObj: BaseCommentType) 
  * @param msgContent
  */
 export function generateNewComment(
-    commentParent: BaseCommentType | ReplyCommentType,
-    currentUserData: UserType,
-    msgContent: string,
+  commentParent: BaseCommentType | ReplyCommentType,
+  currentUserData: UserType,
+  msgContent: string,
 ): ReplyCommentType {
   try {
     return {
@@ -174,139 +184,6 @@ export function generateNewComment(
     };
   } catch (error) {
     throw error;
-  }
-}
-
-/**
- * Function to modify base comments as well as its replies position
- * @param commentsArr - The array of comments
- * @param parentPosition - The position of the parent comment denotes which level must be updated
- * @param increment - Decides whether to increment or decrement the position
- */
-function modifyNestedIndex(
-    commentsArr: BaseCommentType[] | ReplyCommentType[],
-    parentPosition = 0,
-    increment = true,
-) {
-  for (const commentParentElement of commentsArr) {
-    const currentPosition = positionIdGenerator.getPosition(commentParentElement);
-    const currentObjLevel = currentPosition.split('.')[parentPosition];
-    if (currentObjLevel === '1' && !increment) return;
-
-    const modifier = increment ? 1 : -1;
-    console.log(commentParentElement.position, parentPosition);
-    const parentIndex = currentPosition.split('.');
-    parentIndex[parentPosition] = (parseInt(parentIndex[parentPosition], 10) + modifier).toString();
-    positionIdGenerator.updatePosition(commentParentElement, parentIndex.join('.'));
-    console.log(commentParentElement.position);
-
-    while (commentParentElement.replies.length > 0) {
-      modifyNestedIndex(commentParentElement.replies);
-    }
-  }
-}
-
-/**
- * Function to set the changed parent index to its child comments
- * @param commentsArr - The array of comments
- * @param parentPosition - The position of the parent comment denotes which level must be updated
- * @param parentIndex - The new index of the parent comment
- */
-function setNestedIndex(
-    commentsArr: BaseCommentType[] | ReplyCommentType[],
-    parentPosition: number,
-    parentIndex: string,
-) {
-  for (const comment of commentsArr) {
-    // const commentPosArr = comment.position.split('.');
-    // commentPosArr[parentPosition] = parentIndex;
-    // comment.position = commentPosArr.join('.');
-    const commentPosition = positionIdGenerator.getPosition(comment);
-    const commentPosArr = commentPosition.split('.');
-    commentPosArr[parentPosition] = parentIndex;
-    positionIdGenerator.updatePosition(comment, commentPosArr.join('.'));
-    // console.log(comment.position);
-
-    while (comment.replies.length > 0) {
-      setNestedIndex(comment.replies, parentPosition, parentIndex);
-    }
-  }
-}
-
-/**
- * Function to increment the position of the comment
- * @param parentCommentObj - The parent comment object
- * @param commentObjIndex - The index of the comment object
- * @param commentLevel - The level of the comment
- */
-function incrementComment(
-    parentCommentObj: BaseCommentType[] | ReplyCommentType[],
-    commentObjIndex: number,
-    commentLevel: number,
-) {
-  // Loop through the comments and sort them based on the score
-  // starting with the child comments position and go up
-  // till the first comment position
-  for (let i = commentObjIndex - 1; i >= 1; i--) {
-    const previousMessage = parentCommentObj[i - 1];
-    const currentMessage = parentCommentObj[i];
-    // Check if the current message has a higher score than the previous message
-    if (previousMessage.score >= currentMessage.score) return;
-    // Swap the current message position with the previous message position
-    const tempPosition = positionIdGenerator.getPosition(previousMessage);
-    positionIdGenerator.updatePosition(
-        previousMessage,
-        positionIdGenerator.getPosition(currentMessage),
-    );
-    positionIdGenerator.updatePosition(currentMessage, tempPosition);
-    //  Swap the current index with the previous index
-    parentCommentObj[i - 1] = currentMessage;
-    parentCommentObj[i] = previousMessage;
-
-    if (previousMessage.replies.length > 0) {
-      const position = positionIdGenerator.getPosition(previousMessage);
-      setNestedIndex(previousMessage.replies, commentLevel, position.split('.')[commentLevel]);
-    }
-    if (currentMessage.replies.length > 0) {
-      const position = positionIdGenerator.getPosition(previousMessage);
-      setNestedIndex(currentMessage.replies, commentLevel, position.split('.')[commentLevel]);
-    }
-  }
-}
-
-/**
- * Helper function to sort the comments based on the score
- * @param commentsArr
- * @param commentObj
- */
-export function sortCommentsHelper(
-    commentsArr: BaseCommentType[],
-    commentObj: BaseCommentType | ReplyCommentType,
-) {
-  // The last index of the position is the index of the comment in the array
-  console.log(commentObj.position);
-  console.log(positionIdGenerator.positionMap);
-  const commentPosition = positionIdGenerator.getPosition(commentObj);
-  const commentPositionArr = commentPosition.split('.');
-  const commentLevel = commentPositionArr.length - 1;
-  const commentObjIndex = parseInt(commentPositionArr[commentPositionArr.length - 1], 10);
-  // If index is greater than 1 then sort the comments as position is 1 based
-  // else return as the comment is the first comment in the hierarchy
-  if (commentObjIndex <= 1) return;
-
-  // Find the parent comment of the comment
-  const commentParentObj = findParentComment(commentsArr, commentPosition);
-
-  // If the parent comment is base comment pass the comments array
-  // else pass the replies array of the parent comment
-  if (commentLevel === 0) {
-    incrementComment(commentsArr, commentObjIndex, commentLevel);
-    console.log(commentsArr);
-    console.log(positionIdGenerator.positionMap);
-  } else {
-    incrementComment(commentParentObj.replies, commentObjIndex, commentLevel);
-    console.log(commentsArr);
-    console.log(positionIdGenerator.positionMap);
   }
 }
 

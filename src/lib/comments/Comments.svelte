@@ -4,9 +4,9 @@
   import { commentsStore, currentUserStore } from '$lib/data/data-store';
   import CommentsRender from '$lib/comments/CommentsRender.svelte';
   import NewComment from '$lib/comments/NewComment.svelte';
-  import { findComment, generateNewComment, removeComment } from './CommentsHelper';
+  import { findComment, generateNewComment, removeComment } from './Scripts/CommentsHelper';
   import { LOCAL_STORAGE_KEY } from '$lib/config/LocalStorageKeys';
-  import { commentsDataContextKey, currentUserContextKey } from './Comments-contenxt';
+  import { commentsDataContextKey, currentUserContextKey } from './Scripts/Comments-contenxt';
   import { setDataToLocalStorage } from '../data/LocalStorage';
 
   let commentsData = $commentsStore;

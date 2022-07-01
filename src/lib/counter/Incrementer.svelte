@@ -2,10 +2,10 @@
   import type { BaseCommentType, ReplyCommentType } from '$lib/data/data-store_types';
 
   import { createEventDispatcher, getContext } from 'svelte';
-  import { thisPostDataContextKey } from '$lib/comments/Comments-contenxt';
+  import { thisPostDataContextKey } from '../comments/Scripts/Comments-contenxt';
   import { messageIdGenerator } from '$lib/data/RandomGenerator';
-  import { sortCommentsHelper } from '../comments/CommentsHelper';
   import { commentsStore } from '../data/data-store';
+  import { incrementCommentsHelper } from '../comments/Scripts/Increment';
 
   const commentsData: BaseCommentType | ReplyCommentType = getContext(thisPostDataContextKey);
   const svelteDispatcher = createEventDispatcher();
@@ -16,7 +16,7 @@
   function increment() {
     // Increment the score by 1.
     commentsData.score = commentsData.score + 1;
-    sortCommentsHelper($commentsStore, commentsData);
+    incrementCommentsHelper($commentsStore, commentsData);
     // Change the message id to indicate that the score has been incremented.
     messageIdGenerator.updateId(commentsData);
     // Dispatch the event further up the chain so DOM can be updated.
