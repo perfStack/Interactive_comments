@@ -5,7 +5,7 @@
   import { thisPostDataContextKey } from '../comments/Scripts/Comments-contenxt';
   import { messageIdGenerator } from '$lib/data/RandomGenerator';
   import { commentsStore } from '../data/data-store';
-  import { incrementCommentsHelper } from '../comments/Scripts/Increment';
+  import { incrementCommentHelper } from '../comments/Scripts/Increment';
 
   const commentsData: BaseCommentType | ReplyCommentType = getContext(thisPostDataContextKey);
   const svelteDispatcher = createEventDispatcher();
@@ -16,7 +16,7 @@
   function increment() {
     // Increment the score by 1.
     commentsData.score = commentsData.score + 1;
-    incrementCommentsHelper($commentsStore, commentsData);
+    incrementCommentHelper($commentsStore, commentsData);
     // Change the message id to indicate that the score has been incremented.
     messageIdGenerator.updateId(commentsData);
     // Dispatch the event further up the chain so DOM can be updated.

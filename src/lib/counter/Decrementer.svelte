@@ -4,6 +4,8 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import { thisPostDataContextKey } from '../comments/Scripts/Comments-contenxt';
   import { messageIdGenerator } from '$lib/data/RandomGenerator';
+  import { commentsStore } from '../data/data-store';
+  import { decrementCommentHelper } from '../comments/Scripts/Decrement';
 
   const commentsData: BaseCommentType | ReplyCommentType = getContext(thisPostDataContextKey);
   const svelteDispatcher = createEventDispatcher();
@@ -12,11 +14,12 @@
    * @description This is used to decrement the count by 1.
    */
   function decrement() {
-    // decrement the count by 1
+    // Decrement the score by 1.
     commentsData.score = commentsData.score - 1;
-    // Change te id of the message so svelte knows to update the component.
+    decrementCommentHelper($commentsStore, commentsData);
+    // Change the message id to indicate that the score has been incremented.
     messageIdGenerator.updateId(commentsData);
-    // Dispatch the event further up the chain, so that the component can update.
+    // Dispatch the event further up the chain so DOM can be updated.
     svelteDispatcher('decrementCounter');
   }
 </script>

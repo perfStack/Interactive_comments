@@ -8,9 +8,9 @@ import { positionIdGenerator } from '../../data/RandomGenerator';
  * @param increment - Decides whether to increment or decrement the position
  */
 export function modifyNestedIndex(
-  commentsArr: BaseCommentType[] | ReplyCommentType[],
-  parentPosition = 0,
-  increment = true,
+    commentsArr: BaseCommentType[] | ReplyCommentType[],
+    parentPosition = 0,
+    increment = true,
 ) {
   for (const commentParentElement of commentsArr) {
     const currentPosition = positionIdGenerator.getPosition(commentParentElement);
@@ -37,9 +37,9 @@ export function modifyNestedIndex(
  * @param parentIndex - The new index of the parent comment
  */
 export function setNestedIndex(
-  commentsArr: BaseCommentType[] | ReplyCommentType[],
-  parentPosition: number,
-  parentIndex: string,
+    commentsArr: BaseCommentType[] | ReplyCommentType[],
+    parentPosition: number,
+    parentIndex: string,
 ) {
   for (const comment of commentsArr) {
     // const commentPosArr = comment.position.split('.');
@@ -47,6 +47,7 @@ export function setNestedIndex(
     // comment.position = commentPosArr.join('.');
     const commentPosition = positionIdGenerator.getPosition(comment);
     const commentPosArr = commentPosition.split('.');
+    // console.log(parentPosition, parentIndex);
     commentPosArr[parentPosition] = parentIndex;
     positionIdGenerator.updatePosition(comment, commentPosArr.join('.'));
     // console.log(comment.position);

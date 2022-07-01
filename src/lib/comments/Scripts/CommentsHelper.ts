@@ -2,6 +2,7 @@ import type { BaseCommentType, ReplyCommentType, UserType } from '../../data/dat
 import { messageIdGenerator, positionIdGenerator } from '../../data/RandomGenerator';
 
 // todo - updated score to be set to local storage
+// todo - update the score to check time when score is a tie
 
 /**
  * function to return the comment Object using the supplied commentId
@@ -9,8 +10,8 @@ import { messageIdGenerator, positionIdGenerator } from '../../data/RandomGenera
  * @param commentPositionId - The id of the comment whose object is to be returned
  */
 export function findComment(
-  commentArr: BaseCommentType[],
-  commentPositionId: number,
+    commentArr: BaseCommentType[],
+    commentPositionId: number,
 ): [BaseCommentType | ReplyCommentType, boolean] {
   try {
     // Split the comment as it can be a nested one, with each number denoting the nested index.
@@ -38,7 +39,7 @@ export function findComment(
         commentObj = baseCommentObj.replies[messageIndex];
         if (!commentObj) {
           throw new Error(
-            `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
+              `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
           );
         }
       }
@@ -56,8 +57,8 @@ export function findComment(
  * @returns
  */
 export function findParentComment(
-  commentArr: BaseCommentType[],
-  commentPosition: string,
+    commentArr: BaseCommentType[],
+    commentPosition: string,
 ): BaseCommentType | ReplyCommentType {
   // Split the comment as it can be a nested one, with each number denoting the nested index.
   // eg 1.4.3
@@ -81,7 +82,7 @@ export function findParentComment(
 
       if (!commentObj) {
         throw new Error(
-          `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
+            `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
         );
       }
     }
@@ -91,11 +92,15 @@ export function findParentComment(
   return commentObj;
 }
 
-function deleteMessageFromMemory(messageObj: number) {
+/**
+ * Function to delete the current message is as well as position from the Set and Map respectively
+ * @param messageObj
+ */
+function deleteMessageFromMemory(messageObj: BaseCommentType | ReplyCommentType) {
   // Remove the comment id from the available pool of comment ids
-  messageIdGenerator.deleteId(messageObj);
+  messageIdGenerator.deleteId(messageObj.id);
   // Remove the comment position from the available pool of comment positions
-  positionIdGenerator.deletePosition(messageObj);
+  positionIdGenerator.deletePosition(messageObj.position);
 }
 
 /**
@@ -123,7 +128,7 @@ export function removeComment(commentArr: BaseCommentType[], commentPositionId: 
   // from the array as well as remove the entire nested comment array.
   if (!isBaseComment) {
     // Remove the comment id from the available pool of comment ids
-    deleteMessageFromMemory(commentObj.replies[lastIndex].id);
+    deleteMessageFromMemory(commentObj.replies[lastIndex]);
     // Remove the comment from the replies array
     commentObj.replies.splice(lastIndex, 1);
     // Update the remaining comments position to reflect the new position
@@ -153,7 +158,7 @@ function moveRemainingPostUp(indexToStart: number, commentObj: BaseCommentType) 
       // Update the position of the comment
       // Decrement the last index by 1 and then convert it to string and then join it back with '.'
       reply[reply.length - 1] = (parseInt(reply[reply.length - 1], 10) - 1).toString();
-      // commentObj.replies[i].position = reply.join('.');
+      positionIdGenerator.updatePosition(commentObj.replies[i], reply.join('.'));
     }
   } catch (e) {
     console.error(e);
@@ -167,9 +172,9 @@ function moveRemainingPostUp(indexToStart: number, commentObj: BaseCommentType) 
  * @param msgContent
  */
 export function generateNewComment(
-  commentParent: BaseCommentType | ReplyCommentType,
-  currentUserData: UserType,
-  msgContent: string,
+    commentParent: BaseCommentType | ReplyCommentType,
+    currentUserData: UserType,
+    msgContent: string,
 ): ReplyCommentType {
   try {
     return {
