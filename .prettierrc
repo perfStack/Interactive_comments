@@ -3,9 +3,16 @@
   "singleQuote": true,
   "trailingComma": "all",
   "printWidth": 100,
-  "svelteSortOrder": "options-styles-scripts-markup",
-  "svelteStrictMode": true,
-  "svelteBracketNewLine": false,
-  "svelteAllowShorthand": false,
-  "svelteIndentScriptAndStyle": true
+  "overrides": [
+    {
+      "files": "**/*.svelte",
+      "options": {
+        "svelteSortOrder": "options-scripts-markup-styles",
+        "svelteStrictMode": true,
+        "svelteAllowShorthand": true,
+        "svelteIndentScriptAndStyle": true,
+        "plugins": [ "prettier-plugin-svelte" ]
+      }
+    }
+  ]
 }
