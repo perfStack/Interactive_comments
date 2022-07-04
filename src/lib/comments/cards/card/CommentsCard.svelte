@@ -1,10 +1,5 @@
 <script lang="ts">
-  import type {
-    BaseCommentType,
-    ImgType,
-    ReplyCommentType,
-    UserType,
-  } from '../../../data/data-store_types';
+  import type { BaseCommentType, ReplyCommentType, UserType } from '../../../data/data-store_types';
 
   import { createEventDispatcher, setContext } from 'svelte';
   import NewComment from './components/NewComment.svelte';
@@ -18,16 +13,8 @@
   export let commentData: BaseCommentType | ReplyCommentType;
   export let currentUserData: UserType;
   export let isChild = false;
-  export let isCurrentUserPost = false;
 
   const postPosition = commentData.position;
-  const upvoteCounter = commentData.score;
-  const username = commentData.user.username;
-  const userImgPath: ImgType = {
-    png: commentData.user.image.png,
-    webp: commentData.user.image.webp,
-  };
-  const timestamp = commentData.createdAt;
   const messageContent = commentData.content;
 
   let showReply = false;
