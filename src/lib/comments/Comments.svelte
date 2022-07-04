@@ -25,7 +25,7 @@
     const [commentParent] = findComment(commentsData, msgPosition);
     if (!commentParent) throw new Error('Comment parent not found');
 
-    // Generate new comment and make svelte to update the component DOM
+    // Generate new comment and make svelte update the component DOM
     commentParent.replies.push(generateNewComment(commentParent, currentUserData, msgContent));
     commentsData = commentsData;
 
@@ -67,10 +67,9 @@
 
 <CommentsRender
   commentsData="{commentsData}"
-  currentUserData="{currentUserData}"
   on:editCommentEvent="{editCmntHandler}"
   on:deleteCommentEvent="{deleteCmntHandler}"
   on:replyEvent="{replyCmntHandler}"
   on:modifyCommentScore="{modifyScoreHandler}"
 />
-<NewComment currentUserData="{currentUserData}" btnContent="send" disableWarningText="{true}" />
+<NewComment btnContent="send" autoFocusable="{false}" disableWarningText="{true}" />

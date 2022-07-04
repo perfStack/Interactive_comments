@@ -1,19 +1,16 @@
 <script lang="ts">
-  import type { BaseCommentType, UserType } from '../../data/data-store_types';
+  import type { BaseCommentType } from '../../data/data-store_types';
 
   import CommentsCard from './card/CommentsCard.svelte';
 
   export let commentsData: BaseCommentType[];
   export let isChild = false;
-  export let currentUserData: UserType;
 </script>
 
 {#each commentsData as comment (comment.id)}
   <CommentsCard
     commentData="{comment}"
     isChild="{isChild}"
-    isCurrentUserPost="{currentUserData.username === comment.user.username}"
-    currentUserData="{currentUserData}"
     on:editCommentEvent
     on:deleteCommentEvent
     on:replyEvent
@@ -26,7 +23,6 @@
         <svelte:self
           commentsData="{comment.replies}"
           isChild="{true}"
-          currentUserData="{currentUserData}"
           on:editCommentEvent
           on:deleteCommentEvent
           on:replyEvent

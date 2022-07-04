@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { BaseCommentType, ReplyCommentType, UserType } from '../../../data/data-store_types';
+  import type { BaseCommentType, ReplyCommentType } from '../../../data/data-store_types';
 
   import { createEventDispatcher, setContext } from 'svelte';
   import NewComment from './components/NewComment.svelte';
@@ -11,7 +11,6 @@
   import ReplyingTo from './components/ReplyingTo.svelte';
 
   export let commentData: BaseCommentType | ReplyCommentType;
-  export let currentUserData: UserType;
   export let isChild = false;
 
   const postPosition = commentData.position;
@@ -148,11 +147,7 @@
 
   <!-- Show the reply box -->
   {#if showReply}
-    <NewComment
-      currentUserData="{currentUserData}"
-      btnContent="reply"
-      on:replyEvent="{replyEventHandler}"
-    />
+    <NewComment btnContent="reply" on:replyEvent="{replyEventHandler}" />
   {/if}
 
   <slot />
