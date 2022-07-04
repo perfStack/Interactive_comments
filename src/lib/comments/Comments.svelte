@@ -73,4 +73,4 @@
   on:replyEvent="{replyCmntHandler}"
   on:modifyCommentScore="{modifyScoreHandler}"
 />
-<NewComment currentUserData="{currentUserData}" btnContent="send" />
+<NewComment currentUserData="{currentUserData}" btnContent="send" disableWarningText="{true}" />

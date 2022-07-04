@@ -10,12 +10,13 @@
   export let btnContent: string;
   export let textAreaRows = 5;
   export let textAreaCols = 66;
+  export let disableWarningText = false;
 
   let messageContent = '';
   const username = currentUserData.username;
   const userImgPath = currentUserData.image;
-  let isContentValid: boolean;
-  $: isContentValid = messageContent.length < 1;
+  let isContentInvalid: boolean;
+  $: isContentInvalid = messageContent.length < 1;
 
   const svelteDispatcher = createEventDispatcher();
   /**
@@ -49,13 +50,13 @@
     <div class="new-cc__btn-cont">
       <CustomButton
         btnContent="{btnContent}"
-        isDisabled="{isContentValid}"
+        isDisabled="{isContentInvalid}"
         on:click="{replyEventHandler}"
       />
     </div>
   </div>
-  {#if isContentValid}
-    <p class="text-error">Please enter some text to reply</p>
+  {#if !disableWarningText && isContentInvalid}
+    <p class="text-error">Please enter some text to post</p>
   {/if}
 </div>
 
@@ -88,7 +89,7 @@
   }
 
   .text-error {
-    color: var(--clr-pri-harshRed);
+    color: var(--clr-pri-softRed);
     margin-top: ($padding-box - 0.5rem) * -1;
     padding-left: 1.5rem;
   }
