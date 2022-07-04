@@ -4,15 +4,16 @@
     ImgType,
     ReplyCommentType,
     UserType,
-  } from '$lib/data/data-store_types';
+  } from '../../../data/data-store_types';
 
   import { createEventDispatcher, setContext } from 'svelte';
-  import NewComment from './NewComment.svelte';
-  import { moveCursorToTheEnd } from './Scripts/CommentsHelper';
-  import CustomButton from '$lib/components/CustomButton.svelte';
+  import NewComment from './components/NewComment.svelte';
+  import { moveCursorToTheEnd } from '../../Scripts/CommentsHelper';
+  import CustomButton from './components/CustomButton.svelte';
   import Counter from './counter/Counter.svelte';
-  import { thisPostDataContextKey } from './Scripts/Comments-contenxt';
+  import { thisPostDataContextKey } from '../../Scripts/Comments-contenxt';
   import CommentCardHead from './header/CommentCardHead.svelte';
+  import ReplyingTo from './components/ReplyingTo.svelte';
 
   export let commentData: BaseCommentType | ReplyCommentType;
   export let currentUserData: UserType;
@@ -28,7 +29,6 @@
   };
   const timestamp = commentData.createdAt;
   const messageContent = commentData.content;
-  const replyingTo: string | undefined = (commentData as ReplyCommentType)?.replyingTo || undefined;
 
   let showReply = false;
   let contentEditable = false;
@@ -63,7 +63,7 @@
       const target = e.target as HTMLElement;
       const childTextContent = target.textContent;
 
-      if (!replyingTo) throw new Error("Can't find replyingTo val");
+      // if (!replyingTo) throw new Error("Can't find replyingTo val");
 
       if (childTextContent) {
         contentLengthValid = childTextContent.trim().length > 0;
@@ -129,11 +129,7 @@
         on:deleteComment="{deleteBtnHandler}"
       />
       <div class="cc__content__body">
-        {#if replyingTo}
-          <p class="replying-to-cont">
-            Replying to <span class="replying-to">@{replyingTo}</span>
-          </p>
-        {/if}
+        <ReplyingTo />
         <div
           class="cc__content-text-cont"
           contenteditable="{contentEditable}"
@@ -215,18 +211,6 @@
 
     &__content-text-error {
       color: var(--clr-pri-harshRed);
-    }
-
-    .replying-to-cont {
-      color: var(--clr-nutrl-grayBlue);
-      font-size: 1.5rem;
-      margin-bottom: 0.3rem;
-    }
-
-    .replying-to {
-      color: var(--clr-pri-moderateBlue);
-      cursor: default;
-      font-weight: 600;
     }
 
     &__content-update {

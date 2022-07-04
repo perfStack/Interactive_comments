@@ -1,9 +1,9 @@
-<script lang='ts'>
+<script lang="ts">
   import { setContext } from 'svelte';
 
   import { commentsStore, currentUserStore } from '$lib/data/data-store';
-  import CommentsRender from '$lib/comments/CommentsRender.svelte';
-  import NewComment from '$lib/comments/NewComment.svelte';
+  import CommentsRender from './cards/CommentsRender.svelte';
+  import NewComment from './cards/card/components/NewComment.svelte';
   import { findComment, generateNewComment, removeComment } from './Scripts/CommentsHelper';
   import { LOCAL_STORAGE_KEY } from '$lib/config/LocalStorageKeys';
   import { commentsDataContextKey, currentUserContextKey } from './Scripts/Comments-contenxt';
@@ -66,11 +66,11 @@
 </script>
 
 <CommentsRender
-  {commentsData}
-  {currentUserData}
-  on:editCommentEvent={editCmntHandler}
-  on:deleteCommentEvent={deleteCmntHandler}
-  on:replyEvent={replyCmntHandler}
-  on:modifyCommentScore={modifyScoreHandler}
+  commentsData="{commentsData}"
+  currentUserData="{currentUserData}"
+  on:editCommentEvent="{editCmntHandler}"
+  on:deleteCommentEvent="{deleteCmntHandler}"
+  on:replyEvent="{replyCmntHandler}"
+  on:modifyCommentScore="{modifyScoreHandler}"
 />
-<NewComment {currentUserData} btnContent='send' />
+<NewComment currentUserData="{currentUserData}" btnContent="send" />

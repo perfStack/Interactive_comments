@@ -1,7 +1,7 @@
-import type { BaseCommentType, ReplyCommentType } from '../../../data/data-store_types';
-import { positionIdGenerator } from '../../../data/RandomGenerator';
-import { findParentComment } from '../../Scripts/CommentsHelper';
-import { setNestedIndex } from '../../Scripts/Modify';
+import type { BaseCommentType, ReplyCommentType } from '../../../../../data/data-store_types';
+import { positionIdGenerator } from '../../../../../data/RandomGenerator';
+import { findParentComment } from '../../../../Scripts/CommentsHelper';
+import { setNestedIndex } from '../../../../Scripts/Modify';
 
 /**
  * Function to increment the position of the comment
@@ -9,37 +9,39 @@ import { setNestedIndex } from '../../Scripts/Modify';
  * @param commentObjIndex - The index of the comment object
  * @param commentLevel - The level of the comment
  */
-function incrementComment(
+function decrementComment(
   parentCommentObj: BaseCommentType[] | ReplyCommentType[],
   commentObjIndex: number,
   commentLevel: number,
 ) {
   // Loop through the comments and sort them based on the score
-  // starting with the child comments position and go up
-  // till the first comment position
-  for (let i = commentObjIndex - 1; i >= 1; i--) {
-    const previousMessage = parentCommentObj[i - 1];
+  // starting with the child comments position and go down
+  // till the last comment position
+  for (let i = commentObjIndex - 1; i < parentCommentObj.length - 1; i++) {
     const currentMessage = parentCommentObj[i];
-    // Check if the current message has a higher score than the previous message
-    if (previousMessage.score >= currentMessage.score) return;
+    const nextMessage = parentCommentObj[i + 1];
+    // Check if the current message has a higher score than the next message
+    if (currentMessage.score >= nextMessage.score) return;
     // Swap the current message position with the previous message position
-    const tempPosition = positionIdGenerator.getPosition(previousMessage);
+    const tempPosition = positionIdGenerator.getPosition(nextMessage);
     positionIdGenerator.updatePosition(
-      previousMessage,
+      nextMessage,
       positionIdGenerator.getPosition(currentMessage),
     );
     positionIdGenerator.updatePosition(currentMessage, tempPosition);
     //  Swap the current index with the previous index
-    parentCommentObj[i - 1] = currentMessage;
-    parentCommentObj[i] = previousMessage;
+    parentCommentObj[i] = nextMessage;
+    parentCommentObj[i + 1] = currentMessage;
 
-    if (previousMessage.replies.length > 0) {
-      const position = positionIdGenerator.getPosition(previousMessage);
-      setNestedIndex(previousMessage.replies, commentLevel, position.split('.')[commentLevel]);
+    if (nextMessage.replies.length > 0) {
+      const position = positionIdGenerator.getPosition(nextMessage);
+      setNestedIndex(nextMessage.replies, commentLevel, position.split('.')[commentLevel]);
+      // console.log(commentLevel, position.split('.')[commentLevel]);
     }
     if (currentMessage.replies.length > 0) {
       const position = positionIdGenerator.getPosition(currentMessage);
       setNestedIndex(currentMessage.replies, commentLevel, position.split('.')[commentLevel]);
+      // console.log(commentLevel, position.split('.')[commentLevel]);
     }
   }
 }
@@ -49,30 +51,31 @@ function incrementComment(
  * @param commentsArr
  * @param commentObj
  */
-export function incrementCommentHelper(
+export function decrementCommentHelper(
   commentsArr: BaseCommentType[],
   commentObj: BaseCommentType | ReplyCommentType,
 ) {
   // The last index of the position is the index of the comment in the array
+  // console.log(commentObj.position);
+  // console.log(positionIdGenerator.positionMap);
   const commentPosition = positionIdGenerator.getPosition(commentObj);
   const commentPositionArr = commentPosition.split('.');
   const commentLevel = commentPositionArr.length - 1;
   const commentObjIndex = parseInt(commentPositionArr[commentLevel], 10);
-  // If index is greater than 1 then sort the comments as position is 1 based
-  // else return as the comment is the first comment in the hierarchy
-  if (commentObjIndex === 1) return;
-
   // Find the parent comment of the comment
-  const commentParentObj = findParentComment(commentsArr, commentPosition);
+  const parentObj = findParentComment(commentsArr, commentPosition);
+  // Check if the comments position is last in the replies array
+  // if so return as the comment cannot move further down the chain
+  if (commentObjIndex === parentObj.replies.length) return;
 
   // If the parent comment is base comment pass the comments array
   // else pass the replies array of the parent comment
   if (commentLevel === 0) {
-    incrementComment(commentsArr, commentObjIndex, commentLevel);
+    decrementComment(commentsArr, commentObjIndex, commentLevel);
     // console.log(commentsArr);
     // console.log(positionIdGenerator.positionMap);
   } else {
-    incrementComment(commentParentObj.replies, commentObjIndex, commentLevel);
+    decrementComment(parentObj.replies, commentObjIndex, commentLevel);
     // console.log(commentsArr);
     // console.log(positionIdGenerator.positionMap);
   }

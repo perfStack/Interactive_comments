@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { BaseCommentType, ReplyCommentType } from '../../data/data-store_types';
+  import type { BaseCommentType, ReplyCommentType } from '../../../../data/data-store_types';
   import { createEventDispatcher, getContext } from 'svelte';
-  import { thisPostDataContextKey } from '../Scripts/Comments-contenxt';
-  import AvatarImg from '../../components/AvatarImg.svelte';
-  import { currentUserStore } from '../../data/data-store';
-  import CardIconShake from '../../components/CardIconShake.svelte';
+  import { thisPostDataContextKey } from '../../../Scripts/Comments-contenxt';
+  import AvatarImg from '../components/AvatarImg.svelte';
+  import { currentUserStore } from '../../../../data/data-store';
+  import CardIconShake from '../components/CardIconShake.svelte';
 
   export let contentEditable: boolean;
 

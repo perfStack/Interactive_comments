@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ImgType } from '$lib/data/data-store_types';
+  import type { ImgType } from '../../../../data/data-store_types';
 
   export let username: string;
   export let userImgPath: ImgType;
@@ -8,13 +8,13 @@
 </script>
 
 <picture>
-  <source srcset={userImgPath.webp} type="image/webp" />
+  <source srcset="{userImgPath.webp}" type="image/webp" />
   <img
     width="{imgWidth}px"
     height="{imgHeight}px"
     loading="lazy"
     decoding="async"
-    src={userImgPath.png}
+    src="{userImgPath.png}"
     alt="profile picture of {username}"
     class="cc__content-pic"
   />

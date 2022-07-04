@@ -1,13 +1,13 @@
 <script lang="ts">
-  import type { BaseCommentType, ReplyCommentType } from '../../data/data-store_types';
+  import type { BaseCommentType, ReplyCommentType } from '../../../../data/data-store_types';
   import { createEventDispatcher, getContext } from 'svelte';
 
   import Incrementer from './Incrementer.svelte';
   import Decrementer from './Decrementer.svelte';
-  import { thisPostDataContextKey } from '../Scripts/Comments-contenxt';
+  import { thisPostDataContextKey } from '../../../Scripts/Comments-contenxt';
   import { incrementCommentHelper } from './scripts/Increment';
-  import { commentsStore } from '../../data/data-store';
-  import { messageIdGenerator } from '../../data/RandomGenerator';
+  import { commentsStore } from '../../../../data/data-store';
+  import { messageIdGenerator } from '../../../../data/RandomGenerator';
   import { decrementCommentHelper } from './scripts/Decrement';
 
   const commentData: ReplyCommentType | BaseCommentType = getContext(thisPostDataContextKey);
@@ -42,24 +42,23 @@
   }
 </script>
 
-
-<div class='counter'>
-    <div class='counter__icon-cont counter__icon-cont--1' on:click={increment}>
-      <button class='counter__btn' >
-      <Incrementer></Incrementer>
-      </button>
-    </div>
-    <div class='score'>
-      <p>{commentScore}</p>
-    </div>
-    <div class='counter__icon-cont counter__icon-cont--2'>
-      <button class='counter__btn' on:click={decrement}>
-      <Decrementer></Decrementer>
-      </button>
-    </div>
+<div class="counter">
+  <div class="counter__icon-cont counter__icon-cont--1" on:click="{increment}">
+    <button class="counter__btn">
+      <Incrementer />
+    </button>
+  </div>
+  <div class="score">
+    <p>{commentScore}</p>
+  </div>
+  <div class="counter__icon-cont counter__icon-cont--2">
+    <button class="counter__btn" on:click="{decrement}">
+      <Decrementer />
+    </button>
+  </div>
 </div>
 
-<style lang='scss'>
+<style lang="scss">
   /* Counter */
   .counter {
     align-items: center;
