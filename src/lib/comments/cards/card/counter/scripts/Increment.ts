@@ -10,9 +10,9 @@ import { setNestedIndex } from '../../../../Scripts/Modify';
  * @param commentLevel - The level of the comment
  */
 function incrementComment(
-  parentCommentObj: BaseCommentType[] | ReplyCommentType[],
-  commentObjIndex: number,
-  commentLevel: number,
+    parentCommentObj: BaseCommentType[] | ReplyCommentType[],
+    commentObjIndex: number,
+    commentLevel: number,
 ) {
   // Loop through the comments and sort them based on the score
   // starting with the child comments position and go up
@@ -25,8 +25,8 @@ function incrementComment(
     // Swap the current message position with the previous message position
     const tempPosition = positionIdGenerator.getPosition(previousMessage);
     positionIdGenerator.updatePosition(
-      previousMessage,
-      positionIdGenerator.getPosition(currentMessage),
+        previousMessage,
+        positionIdGenerator.getPosition(currentMessage),
     );
     positionIdGenerator.updatePosition(currentMessage, tempPosition);
     //  Swap the current index with the previous index
@@ -50,8 +50,8 @@ function incrementComment(
  * @param commentObj
  */
 export function incrementCommentHelper(
-  commentsArr: BaseCommentType[],
-  commentObj: BaseCommentType | ReplyCommentType,
+    commentsArr: BaseCommentType[],
+    commentObj: BaseCommentType | ReplyCommentType,
 ) {
   // The last index of the position is the index of the comment in the array
   const commentPosition = positionIdGenerator.getPosition(commentObj);

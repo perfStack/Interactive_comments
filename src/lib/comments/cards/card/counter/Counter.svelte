@@ -4,13 +4,16 @@
 
   import Incrementer from './Incrementer.svelte';
   import Decrementer from './Decrementer.svelte';
-  import { thisPostDataContextKey } from '../../../Scripts/Comments-contenxt';
+  import {
+    commentsDataContextKey,
+    thisPostDataContextKey,
+  } from '../../../Scripts/Comments-context';
   import { incrementCommentHelper } from './scripts/Increment';
-  import { commentsStore } from '../../../../data/data-store';
   import { messageIdGenerator } from '../../../../data/RandomGenerator';
   import { decrementCommentHelper } from './scripts/Decrement';
 
   const commentData: ReplyCommentType | BaseCommentType = getContext(thisPostDataContextKey);
+  const globalCommentsData: BaseCommentType[] = getContext(commentsDataContextKey);
   const commentScore = commentData.score;
   const svelteDispatcher = createEventDispatcher();
   const dispatcherKey = 'modifyCommentScore';
@@ -21,7 +24,7 @@
   function increment() {
     // Increment the score by 1.
     commentData.score = commentData.score + 1;
-    incrementCommentHelper($commentsStore, commentData);
+    incrementCommentHelper(globalCommentsData, commentData);
     // Change the message id to indicate that the score has been incremented.
     messageIdGenerator.updateId(commentData);
     // Dispatch the event further up the chain so DOM can be updated.
@@ -34,7 +37,7 @@
   function decrement() {
     // Decrement the score by 1.
     commentData.score = commentData.score - 1;
-    decrementCommentHelper($commentsStore, commentData);
+    decrementCommentHelper(globalCommentsData, commentData);
     // Change the message id to indicate that the score has been incremented.
     messageIdGenerator.updateId(commentData);
     // Dispatch the event further up the chain so DOM can be updated.

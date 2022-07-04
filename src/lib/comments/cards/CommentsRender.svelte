@@ -37,7 +37,7 @@
 
     <!-- <svelte:fragment slot="cc__new-reply-cont">
       {#if comment.replies && comment.replies.length > 0}
-        <svelte:self commentsData={comment.replies} isChild={true} {currentUserData} on:click />
+        <svelte:self globalCommentsData={comment.replies} isChild={true} {currentUserData} on:click />
       {/if}
     </svelte:fragment> -->
   </CommentsCard>
