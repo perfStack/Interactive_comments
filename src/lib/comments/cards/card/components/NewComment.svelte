@@ -1,26 +1,28 @@
 <script lang="ts">
   import type { UserType } from '../../../../data/data-store_types';
-
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
 
   import AvatarImg from './AvatarImg.svelte';
   import CustomButton from './CustomButton.svelte';
+  import { currentUserContextKey } from '../../../Scripts/Comments-context';
 
-  export let currentUserData: UserType;
   export let btnContent: string;
   export let textAreaRows = 5;
   export let textAreaCols = 66;
+  export let autoFocusable = true;
   export let disableWarningText = false;
 
+  const userData: UserType = getContext(currentUserContextKey);
   let messageContent = '';
-  const username = currentUserData.username;
-  const userImgPath = currentUserData.image;
+  const username = userData.username;
+  const userImgPath = userData.image;
   let isContentInvalid: boolean;
   $: isContentInvalid = messageContent.length < 1;
 
   const svelteDispatcher = createEventDispatcher();
+
   /**
-   *
+   * Function to handle the reply event on an existing message.
    */
   function replyEventHandler() {
     svelteDispatcher('replyEvent', messageContent);
@@ -45,6 +47,7 @@
         cols="{textAreaCols}"
         rows="{textAreaRows}"
         spellcheck="true"
+        autofocus="{autoFocusable}"
         bind:value="{messageContent}"></textarea>
     </div>
     <div class="new-cc__btn-cont">
