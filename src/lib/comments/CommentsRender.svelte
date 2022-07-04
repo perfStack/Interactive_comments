@@ -17,8 +17,7 @@
     on:editCommentEvent
     on:deleteCommentEvent
     on:replyEvent
-    on:incrementCounter
-    on:decrementCounter
+    on:modifyCommentScore
   >
     <!-- Check if it has replies array if it has, then check if it has atleast 1 reply -->
     <!-- Issue with named slots https://github.com/sveltejs/svelte/issues/5312 -->
@@ -31,8 +30,7 @@
           on:editCommentEvent
           on:deleteCommentEvent
           on:replyEvent
-          on:incrementCounter
-          on:decrementCounter
+          on:modifyCommentScore
         />
       </div>
     {/if}

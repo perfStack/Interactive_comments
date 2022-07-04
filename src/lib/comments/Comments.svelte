@@ -71,7 +71,6 @@
   on:editCommentEvent={editCmntHandler}
   on:deleteCommentEvent={deleteCmntHandler}
   on:replyEvent={replyCmntHandler}
-  on:incrementCounter={modifyScoreHandler}
-  on:decrementCounter={modifyScoreHandler}
+  on:modifyCommentScore={modifyScoreHandler}
 />
 <NewComment {currentUserData} btnContent='send' />

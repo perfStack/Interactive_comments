@@ -1,7 +1,7 @@
-import type { BaseCommentType, ReplyCommentType } from '../../data/data-store_types';
-import { positionIdGenerator } from '../../data/RandomGenerator';
-import { findParentComment } from './CommentsHelper';
-import { setNestedIndex } from './Modify';
+import type { BaseCommentType, ReplyCommentType } from '../../../data/data-store_types';
+import { positionIdGenerator } from '../../../data/RandomGenerator';
+import { findParentComment } from '../../Scripts/CommentsHelper';
+import { setNestedIndex } from '../../Scripts/Modify';
 
 /**
  * Function to increment the position of the comment
@@ -10,9 +10,9 @@ import { setNestedIndex } from './Modify';
  * @param commentLevel - The level of the comment
  */
 function decrementComment(
-    parentCommentObj: BaseCommentType[] | ReplyCommentType[],
-    commentObjIndex: number,
-    commentLevel: number,
+  parentCommentObj: BaseCommentType[] | ReplyCommentType[],
+  commentObjIndex: number,
+  commentLevel: number,
 ) {
   // Loop through the comments and sort them based on the score
   // starting with the child comments position and go down
@@ -25,8 +25,8 @@ function decrementComment(
     // Swap the current message position with the previous message position
     const tempPosition = positionIdGenerator.getPosition(nextMessage);
     positionIdGenerator.updatePosition(
-        nextMessage,
-        positionIdGenerator.getPosition(currentMessage),
+      nextMessage,
+      positionIdGenerator.getPosition(currentMessage),
     );
     positionIdGenerator.updatePosition(currentMessage, tempPosition);
     //  Swap the current index with the previous index
@@ -52,8 +52,8 @@ function decrementComment(
  * @param commentObj
  */
 export function decrementCommentHelper(
-    commentsArr: BaseCommentType[],
-    commentObj: BaseCommentType | ReplyCommentType,
+  commentsArr: BaseCommentType[],
+  commentObj: BaseCommentType | ReplyCommentType,
 ) {
   // The last index of the position is the index of the comment in the array
   // console.log(commentObj.position);

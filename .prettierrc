@@ -9,7 +9,7 @@
       "options": {
         "svelteSortOrder": "options-scripts-markup-styles",
         "svelteStrictMode": true,
-        "svelteAllowShorthand": true,
+        "svelteAllowShorthand": false,
         "svelteIndentScriptAndStyle": true,
         "plugins": [ "prettier-plugin-svelte" ]
       }
