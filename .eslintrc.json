@@ -20,6 +20,7 @@
     // "no-console": 1,
     "object-curly-spacing": ["error", "always"],
     "valid-jsdoc": 0,
+    "brace-style": ["error","stroustrup"],
     "max-len": ["error", { "code": 100 }],
     "no-tabs": ["error", { "allowIndentationTabs": true }]
     // "indent": ["error", "tab"]
