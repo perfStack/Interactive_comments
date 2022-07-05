@@ -9,12 +9,10 @@
     thisPostDataContextKey,
   } from '../../../Scripts/Comments-context';
   import { incrementCommentHelper } from './scripts/Increment';
-  import { messageIdGenerator } from '../../../../data/RandomGenerator';
   import { decrementCommentHelper } from './scripts/Decrement';
 
   const commentData: ReplyCommentType | BaseCommentType = getContext(thisPostDataContextKey);
   const globalCommentsData: BaseCommentType[] = getContext(commentsDataContextKey);
-  const commentScore = commentData.score;
   const svelteDispatcher = createEventDispatcher();
   const dispatcherKey = 'modifyCommentScore';
 
@@ -26,7 +24,7 @@
     commentData.score = commentData.score + 1;
     incrementCommentHelper(globalCommentsData, commentData);
     // Change the message id to indicate that the score has been incremented.
-    messageIdGenerator.updateId(commentData);
+    // messageIdGenerator.updateId(commentData);
     // Dispatch the event further up the chain so DOM can be updated.
     svelteDispatcher(dispatcherKey);
   }
@@ -39,7 +37,7 @@
     commentData.score = commentData.score - 1;
     decrementCommentHelper(globalCommentsData, commentData);
     // Change the message id to indicate that the score has been incremented.
-    messageIdGenerator.updateId(commentData);
+    // messageIdGenerator.updateId(commentData);
     // Dispatch the event further up the chain so DOM can be updated.
     svelteDispatcher(dispatcherKey);
   }
@@ -52,7 +50,7 @@
     </button>
   </div>
   <div class="score">
-    <p>{commentScore}</p>
+    <p>{commentData.score}</p>
   </div>
   <div class="counter__icon-cont counter__icon-cont--2">
     <button class="counter__btn" on:click="{decrement}">
