@@ -11,6 +11,7 @@ export interface UserType {
 export interface BaseCommentType {
   id: number;
   position: number;
+  isDeleted: boolean;
   content: string;
   createdAt: string;
   createdAtDate: Date;

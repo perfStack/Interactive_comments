@@ -54,21 +54,23 @@
 </script>
 
 <div class="cont">
-  <div class="pic-cont">
-    <AvatarImg userImgPath="{userImgPath}" username="{username}" />
-  </div>
+  {#if !commentData.isDeleted}
+    <div class="pic-cont">
+      <AvatarImg userImgPath="{userImgPath}" username="{username}" />
+    </div>
+  {/if}
   <div class="head-cont">
     <div class="status-cont">
       <p class="username">{username}</p>
       <!-- Check if the user is logged in,if so then show "You" beside the post author name-->
       {#if isCurrentUserPost}
-        <p class="user-status hidden">you</p>
+        <p class="user-status">you</p>
       {/if}
       <p class="timestamp">{countValue} ago</p>
     </div>
 
     <!-- Check if the user is logged in,if so then show edit and delete button on their own posts-->
-    {#if isCurrentUserPost}
+    {#if isCurrentUserPost && !commentData.isDeleted}
       <div class="modify-cont">
         <CardIconShake
           imgSrc="/img/icons/icon-delete.svg"
@@ -84,7 +86,7 @@
           on:click="{editBtnHandler}"
         />
       </div>
-    {:else}
+    {:else if !commentData.isDeleted}
       <div class="reply-cont" on:click="{replyHandler}">
         <CardIconShake imgSrc="/img/icons/icon-reply.svg" descriptionText="reply" />
       </div>

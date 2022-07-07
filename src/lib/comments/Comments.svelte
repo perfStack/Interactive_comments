@@ -4,7 +4,11 @@
   import { commentsStore, currentUserStore } from './scripts/data/data-store';
   import CommentsRender from './cards/CommentsRender.svelte';
   import NewComment from './cards/card/components/NewComment.svelte';
-  import { findComment, generateNewComment, removeComment } from './scripts/CommentsHelper';
+  import {
+    findComment,
+    generateNewComment,
+    removeCommentConstructively,
+  } from './scripts/CommentsHelper';
   import { LOCAL_STORAGE_KEY } from '$lib/scripts/config/LocalStorageKeys';
   import { commentsDataContextKey, currentUserContextKey } from './scripts/context/CommentsContext';
   import { setDataToLocalStorage } from '../scripts/LocalStorage';
@@ -50,7 +54,7 @@
   function deleteCmntHandler(event: CustomEvent) {
     // console.log(event.detail.msgPosition);
 
-    removeComment(commentsData, event.detail.msgPosition);
+    removeCommentConstructively(commentsData, event.detail.msgPosition);
     commentsData = commentsData;
 
     setDataToLocalStorage(LOCAL_STORAGE_KEY.commentsData, JSON.stringify(commentsData));

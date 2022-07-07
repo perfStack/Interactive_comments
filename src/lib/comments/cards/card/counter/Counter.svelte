@@ -15,7 +15,7 @@
   const globalCommentsData: BaseCommentType[] = getContext(commentsDataContextKey);
   const svelteDispatcher = createEventDispatcher();
   const dispatcherKey = 'modifyCommentScore';
-
+  const isDeleted = commentData.isDeleted;
   /**
    * @description This is used to increment the count by 1.
    */
@@ -45,16 +45,16 @@
 
 <div class="counter">
   <div class="counter__icon-cont counter__icon-cont--1" on:click="{increment}">
-    <button class="counter__btn">
-      <Incrementer />
+    <button class="counter__btn" disabled="{isDeleted}">
+      <Incrementer isDisabled="{isDeleted}" />
     </button>
   </div>
   <div class="score">
     <p>{commentData.score}</p>
   </div>
-  <div class="counter__icon-cont counter__icon-cont--2">
-    <button class="counter__btn" on:click="{decrement}">
-      <Decrementer />
+  <div class="counter__icon-cont counter__icon-cont--2" on:click="{decrement}">
+    <button class="counter__btn" disabled="{isDeleted}">
+      <Decrementer isDisabled="{isDeleted}" />
     </button>
   </div>
 </div>
@@ -79,6 +79,10 @@
       justify-content: center;
       padding: 0.6rem;
       width: inherit;
+
+      &[disabled] {
+        cursor: not-allowed;
+      }
     }
 
     &__icon-cont {

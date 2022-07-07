@@ -140,6 +140,27 @@ export function removeComment(commentArr: BaseCommentType[], commentPositionId: 
 }
 
 /**
+ *  Function to remove a set the message as well as it's content to deleted
+ * @param commentArr
+ * @param commentPositionId
+ */
+export function removeCommentConstructively(
+  commentArr: BaseCommentType[],
+  commentPositionId: number,
+) {
+  const [commentObj] = findComment(commentArr, commentPositionId);
+
+  commentObj.isDeleted = true;
+  commentObj.content = 'This comment has been deleted';
+  commentObj.user = { username: 'Deleted', image: { png: '', webp: '' } };
+  // if ('replyingTo' in commentObj) commentObj.replyingTo = 'deleted';
+
+  // Updating the id of the comment is necessary as the id of the comment is used internally,
+  // to update the DOM , so the changed attributes are reflected in the DOM.
+  messageIdGenerator.updateId(commentObj);
+}
+
+/**
  * Function to update the new comment.position as well as comment.id
  * of the remaining comments in the array.
  * @param indexToStart - The position of the deleted comment
@@ -192,6 +213,7 @@ export function generateNewComment(
     return {
       id: messageIdGenerator.generateId(),
       position: positionIdGenerator.generateIdAndPosition(commentParent),
+      isDeleted: false,
       content: msgContent,
       user: currentUserData,
       createdAt: 'now',
