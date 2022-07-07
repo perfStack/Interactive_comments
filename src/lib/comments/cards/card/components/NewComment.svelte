@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { UserType } from '../../../scripts/data/data-store_types';
   import { createEventDispatcher, getContext } from 'svelte';
+  import { slide } from 'svelte/transition';
 
   import AvatarImg from './AvatarImg.svelte';
   import CustomButton from './CustomButton.svelte';
@@ -29,7 +30,7 @@
   }
 </script>
 
-<div class="new-cc">
+<div class="new-cc" transition:slide>
   <div class="new-cc-cont">
     <div class="new-cc__avatar-cont">
       <AvatarImg
@@ -69,13 +70,12 @@
   .new-cc {
     background-color: var(--clr-nutrl-pureWhite);
     border-radius: var(--brdr-radius);
-    margin-bottom: 1rem;
+    box-shadow: 0 1px 2px 2px hsl(0deg 0% 92%);
 
     &-cont {
       align-items: flex-start;
       display: flex;
       justify-content: space-between;
-      margin-top: 3rem;
       padding: $padding-box;
     }
 
