@@ -6,10 +6,7 @@
   import { moveCursorToTheEnd } from '../../scripts/CommentsHelper';
   import CustomButton from './components/CustomButton.svelte';
   import Counter from './counter/Counter.svelte';
-  import {
-    thisPostDataContextKey,
-    thisTimerInstance,
-  } from '../../scripts/context/Comments-context';
+  import { thisPostDataContextKey, thisTimerInstance } from '../../scripts/context/CommentsContext';
   import CommentCardHead from './header/CommentCardHead.svelte';
   import ReplyingTo from './components/ReplyingTo.svelte';
   import { Timer } from './header/scripts/timer';

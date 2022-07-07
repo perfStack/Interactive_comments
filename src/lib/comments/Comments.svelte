@@ -6,10 +6,7 @@
   import NewComment from './cards/card/components/NewComment.svelte';
   import { findComment, generateNewComment, removeComment } from './scripts/CommentsHelper';
   import { LOCAL_STORAGE_KEY } from '$lib/scripts/config/LocalStorageKeys';
-  import {
-    commentsDataContextKey,
-    currentUserContextKey,
-  } from './scripts/context/Comments-context';
+  import { commentsDataContextKey, currentUserContextKey } from './scripts/context/CommentsContext';
   import { setDataToLocalStorage } from '../scripts/LocalStorage';
 
   let commentsData = $commentsStore;

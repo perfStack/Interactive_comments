@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { BaseCommentType, ReplyCommentType } from '../../../scripts/data/data-store_types';
   import { getContext } from 'svelte';
-  import { thisPostDataContextKey } from '../../../scripts/context/Comments-context';
+  import { thisPostDataContextKey } from '../../../scripts/context/CommentsContext';
 
   const commentData: ReplyCommentType | BaseCommentType = getContext(thisPostDataContextKey);
   const replyingTo = 'replyingTo' in commentData ? commentData.replyingTo : null;

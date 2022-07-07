@@ -4,7 +4,7 @@
   import {
     thisPostDataContextKey,
     thisTimerInstance,
-  } from '../../../scripts/context/Comments-context';
+  } from '../../../scripts/context/CommentsContext';
   import AvatarImg from '../components/AvatarImg.svelte';
   import { currentUserStore } from '../../../scripts/data/data-store';
   import CardIconShake from '../components/CardIconShake.svelte';
