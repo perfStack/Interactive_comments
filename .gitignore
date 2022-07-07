@@ -111,3 +111,6 @@ src/css
 
 # Disable Idea folder
 .idea
+
+# Disable svelte kit folder
+.svelte-kit
