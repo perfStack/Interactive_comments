@@ -1,4 +1,4 @@
-import type { BaseCommentType, ReplyCommentType } from '../comments/scripts/data-store_types';
+import type { BaseCommentType, ReplyCommentType } from '../comments/scripts/data/data-store_types';
 import { randomGenerator } from './helpers/helper';
 import { getDataFromLocalStorage, setDataToLocalStorage } from './LocalStorage';
 import { LOCAL_STORAGE_KEY } from './config/LocalStorageKeys';

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { BaseCommentType } from '../scripts/data-store_types';
+  import type { BaseCommentType } from '../scripts/data/data-store_types';
 
   import CommentsCard from './card/CommentsCard.svelte';
 

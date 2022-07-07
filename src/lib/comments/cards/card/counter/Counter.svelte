@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { BaseCommentType, ReplyCommentType } from '../../../scripts/data-store_types';
+  import type { BaseCommentType, ReplyCommentType } from '../../../scripts/data/data-store_types';
   import { createEventDispatcher, getContext } from 'svelte';
 
   import Incrementer from './Incrementer.svelte';
@@ -7,7 +7,7 @@
   import {
     commentsDataContextKey,
     thisPostDataContextKey,
-  } from '../../../scripts/Comments-context';
+  } from '../../../scripts/context/Comments-context';
   import { incrementCommentHelper } from './scripts/Increment';
   import { decrementCommentHelper } from './scripts/Decrement';
 

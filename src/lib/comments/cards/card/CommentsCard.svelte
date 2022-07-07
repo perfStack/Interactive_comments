@@ -1,12 +1,15 @@
 <script lang="ts">
-  import type { BaseCommentType, ReplyCommentType } from '../../scripts/data-store_types';
+  import type { BaseCommentType, ReplyCommentType } from '../../scripts/data/data-store_types';
 
   import { createEventDispatcher, setContext } from 'svelte';
   import NewComment from './components/NewComment.svelte';
   import { moveCursorToTheEnd } from '../../scripts/CommentsHelper';
   import CustomButton from './components/CustomButton.svelte';
   import Counter from './counter/Counter.svelte';
-  import { thisPostDataContextKey, thisTimerInstance } from '../../scripts/Comments-context';
+  import {
+    thisPostDataContextKey,
+    thisTimerInstance,
+  } from '../../scripts/context/Comments-context';
   import CommentCardHead from './header/CommentCardHead.svelte';
   import ReplyingTo from './components/ReplyingTo.svelte';
   import { Timer } from './header/scripts/timer';

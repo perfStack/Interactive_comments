@@ -1,12 +1,15 @@
 <script lang="ts">
   import { setContext } from 'svelte';
 
-  import { commentsStore, currentUserStore } from './scripts/data-store';
+  import { commentsStore, currentUserStore } from './scripts/data/data-store';
   import CommentsRender from './cards/CommentsRender.svelte';
   import NewComment from './cards/card/components/NewComment.svelte';
   import { findComment, generateNewComment, removeComment } from './scripts/CommentsHelper';
   import { LOCAL_STORAGE_KEY } from '$lib/scripts/config/LocalStorageKeys';
-  import { commentsDataContextKey, currentUserContextKey } from './scripts/Comments-context';
+  import {
+    commentsDataContextKey,
+    currentUserContextKey,
+  } from './scripts/context/Comments-context';
   import { setDataToLocalStorage } from '../scripts/LocalStorage';
 
   let commentsData = $commentsStore;

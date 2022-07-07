@@ -1,9 +1,12 @@
 <script lang="ts">
-  import type { BaseCommentType, ReplyCommentType } from '../../../scripts/data-store_types';
+  import type { BaseCommentType, ReplyCommentType } from '../../../scripts/data/data-store_types';
   import { createEventDispatcher, getContext, onDestroy } from 'svelte';
-  import { thisPostDataContextKey, thisTimerInstance } from '../../../scripts/Comments-context';
+  import {
+    thisPostDataContextKey,
+    thisTimerInstance,
+  } from '../../../scripts/context/Comments-context';
   import AvatarImg from '../components/AvatarImg.svelte';
-  import { currentUserStore } from '../../../scripts/data-store';
+  import { currentUserStore } from '../../../scripts/data/data-store';
   import CardIconShake from '../components/CardIconShake.svelte';
   import { Timer } from './scripts/timer';
 

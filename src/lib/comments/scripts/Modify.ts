@@ -1,4 +1,4 @@
-import type { BaseCommentType, ReplyCommentType } from './data-store_types';
+import type { BaseCommentType, ReplyCommentType } from './data/data-store_types';
 import { positionIdGenerator } from '../../scripts/RandomGenerator';
 
 /**
