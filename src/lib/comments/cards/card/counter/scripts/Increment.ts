@@ -1,5 +1,5 @@
 import type { BaseCommentType, ReplyCommentType } from '../../../../scripts/data-store_types';
-import { positionIdGenerator } from '../../../../../data/RandomGenerator';
+import { positionIdGenerator } from '../../../../../scripts/RandomGenerator';
 import { findParentComment } from '../../../../scripts/CommentsHelper';
 import { setNestedIndex } from '../../../../scripts/Modify';
 
