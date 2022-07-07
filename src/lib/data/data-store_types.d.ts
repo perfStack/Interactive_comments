@@ -13,6 +13,7 @@ export interface BaseCommentType {
   position: number;
   content: string;
   createdAt: string;
+  createdAtDate: Date;
   score: number;
   user: UserType;
   replies: ReplyCommentType[];

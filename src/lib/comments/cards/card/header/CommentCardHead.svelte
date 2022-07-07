@@ -1,17 +1,28 @@
 <script lang="ts">
   import type { BaseCommentType, ReplyCommentType } from '../../../../data/data-store_types';
-  import { createEventDispatcher, getContext } from 'svelte';
-  import { thisPostDataContextKey } from '../../../Scripts/Comments-context';
+  import { createEventDispatcher, getContext, onDestroy } from 'svelte';
+  import { thisPostDataContextKey, thisTimerInstance } from '../../../Scripts/Comments-context';
   import AvatarImg from '../components/AvatarImg.svelte';
   import { currentUserStore } from '../../../../data/data-store';
   import CardIconShake from '../components/CardIconShake.svelte';
+  import { Timer } from '../counter/scripts/timer';
 
   export let contentEditable: boolean;
 
   const commentData: ReplyCommentType | BaseCommentType = getContext(thisPostDataContextKey);
+  const timerFunction: Timer = getContext(thisTimerInstance);
+  timerFunction.setIntervalTimer();
   const username = commentData.user.username;
   const userImgPath = commentData.user.image;
-  const timestamp = commentData.createdAt;
+
+  let countValue: string;
+  const unsubscribe = timerFunction.timerValueStore.subscribe((value) => {
+    countValue = value;
+  });
+
+  onDestroy(unsubscribe);
+
+  // console.log(timestamp);
 
   const isCurrentUserPost = $currentUserStore.username === username;
   const svelteDispatchEvent = createEventDispatcher();
@@ -50,7 +61,7 @@
       {#if isCurrentUserPost}
         <p class="user-status hidden">you</p>
       {/if}
-      <p class="timestamp">{timestamp}</p>
+      <p class="timestamp">{countValue} ago</p>
     </div>
 
     <!-- Check if the user is logged in,if so then show edit and delete button on their own posts-->

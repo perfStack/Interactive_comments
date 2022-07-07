@@ -1,5 +1,6 @@
 import type { BaseCommentType, ReplyCommentType, UserType } from '../../data/data-store_types';
 import { messageIdGenerator, positionIdGenerator } from '../../data/RandomGenerator';
+import { generateCurrentUTC } from '../cards/card/counter/scripts/timer';
 
 // todo - updated score to be set to local storage
 // todo - update the score to check time when score is a tie
@@ -10,8 +11,8 @@ import { messageIdGenerator, positionIdGenerator } from '../../data/RandomGenera
  * @param commentPositionId - The id of the comment whose object is to be returned
  */
 export function findComment(
-    commentArr: BaseCommentType[],
-    commentPositionId: number,
+  commentArr: BaseCommentType[],
+  commentPositionId: number,
 ): [BaseCommentType | ReplyCommentType, boolean] {
   try {
     // Split the comment as it can be a nested one, with each number denoting the nested index.
@@ -39,7 +40,7 @@ export function findComment(
         commentObj = baseCommentObj.replies[messageIndex];
         if (!commentObj) {
           throw new Error(
-              `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
+            `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
           );
         }
       }
@@ -57,8 +58,8 @@ export function findComment(
  * @returns
  */
 export function findParentComment(
-    commentArr: BaseCommentType[],
-    commentPosition: string,
+  commentArr: BaseCommentType[],
+  commentPosition: string,
 ): BaseCommentType | ReplyCommentType {
   // Split the comment as it can be a nested one, with each number denoting the nested index.
   // eg 1.4.3
@@ -82,7 +83,7 @@ export function findParentComment(
 
       if (!commentObj) {
         throw new Error(
-            `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
+          `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
         );
       }
     }
@@ -183,9 +184,9 @@ function moveRemainingPostUp(indexToStart: number, commentObj: BaseCommentType, 
  * @param msgContent
  */
 export function generateNewComment(
-    commentParent: BaseCommentType | ReplyCommentType,
-    currentUserData: UserType,
-    msgContent: string,
+  commentParent: BaseCommentType | ReplyCommentType,
+  currentUserData: UserType,
+  msgContent: string,
 ): ReplyCommentType {
   try {
     return {
@@ -194,6 +195,7 @@ export function generateNewComment(
       content: msgContent,
       user: currentUserData,
       createdAt: 'now',
+      createdAtDate: generateCurrentUTC(),
       score: 0,
       replies: [], // empty array for replies
       replyingTo: commentParent.user.username,
