@@ -1,5 +1,5 @@
 import type { BaseCommentType, ReplyCommentType } from './data/data-store_types';
-import { positionIdGenerator } from '../../scripts/RandomGenerator';
+import { positionIdGenerator } from './data/RandomGenerator';
 
 /**
  * Function to modify base comments as well as its replies position

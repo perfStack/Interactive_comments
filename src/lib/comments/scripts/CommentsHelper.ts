@@ -1,5 +1,5 @@
 import type { BaseCommentType, ReplyCommentType, UserType } from './data/data-store_types';
-import { messageIdGenerator, positionIdGenerator } from '../../scripts/RandomGenerator';
+import { messageIdGenerator, positionIdGenerator } from './data/RandomGenerator';
 import { generateCurrentUTC } from '../../scripts/DateTime';
 
 // todo - updated score to be set to local storage

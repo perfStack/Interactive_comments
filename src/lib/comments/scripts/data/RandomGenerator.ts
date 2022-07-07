@@ -1,7 +1,7 @@
-import type { BaseCommentType, ReplyCommentType } from '../comments/scripts/data/data-store_types';
-import { randomGenerator } from './helpers/helper';
-import { getDataFromLocalStorage, setDataToLocalStorage } from './LocalStorage';
-import { LOCAL_STORAGE_KEY } from './config/LocalStorageKeys';
+import type { BaseCommentType, ReplyCommentType } from './data-store_types';
+import { randomGenerator } from '../../../scripts/helpers/helper';
+import { getDataFromLocalStorage, setDataToLocalStorage } from '../../../scripts/LocalStorage';
+import { LOCAL_STORAGE_KEY } from '../../../scripts/config/LocalStorageKeys';
 
 /**
  * Function to generate a unique id.
