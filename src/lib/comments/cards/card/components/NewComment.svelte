@@ -41,6 +41,7 @@
       />
     </div>
     <div class="new-cc__input-cont">
+      <!-- svelte-ignore a11y-autofocus -->
       <textarea
         class="new-cc__textarea"
         name="new-content"
