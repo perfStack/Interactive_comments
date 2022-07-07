@@ -2,6 +2,7 @@
   import type { BaseCommentType, ReplyCommentType } from '../../scripts/data/data-store_types';
 
   import { createEventDispatcher, setContext } from 'svelte';
+  import { slide } from 'svelte/transition';
   import NewComment from './components/NewComment.svelte';
   import { moveCursorToTheEnd } from '../../scripts/CommentsHelper';
   import CustomButton from './components/CustomButton.svelte';
@@ -136,7 +137,7 @@
         <!-- Show an Update btn if the content element is content editable which
         means the user is  trying to edit an existing post -->
         {#if contentEditable}
-          <div class="cc__content-update">
+          <div class="cc__content-update" transition:slide>
             <CustomButton
               btnContent="update"
               isDisabled="{!contentLengthValid}"
