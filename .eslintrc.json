@@ -20,10 +20,10 @@
     // "no-console": 1,
     "object-curly-spacing": ["error", "always"],
     "valid-jsdoc": 0,
-    "brace-style": ["error","stroustrup"],
+    "brace-style": ["warn","stroustrup"],
     "max-len": ["error", { "code": 100 }],
-    "no-tabs": ["error", { "allowIndentationTabs": true }]
-    // "indent": ["error", "tab"]
+    "no-tabs": ["error", { "allowIndentationTabs": true }],
+     "indent": "off"
   },
   "settings": {
     "svelte3/typescript": true // load TypeScript as peer dependency
