@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ImgType } from '../../../../data/data-store_types';
+  import type { ImgType } from '../../../scripts/data-store_types';
 
   export let username: string;
   export let userImgPath: ImgType;

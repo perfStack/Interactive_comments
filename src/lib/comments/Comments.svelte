@@ -1,7 +1,7 @@
 <script lang="ts">
   import { setContext } from 'svelte';
 
-  import { commentsStore, currentUserStore } from '$lib/data/data-store';
+  import { commentsStore, currentUserStore } from './scripts/data-store';
   import CommentsRender from './cards/CommentsRender.svelte';
   import NewComment from './cards/card/components/NewComment.svelte';
   import { findComment, generateNewComment, removeComment } from './scripts/CommentsHelper';

@@ -1,4 +1,4 @@
-import type { BaseCommentType, ReplyCommentType, UserType } from '../../data/data-store_types';
+import type { BaseCommentType, ReplyCommentType, UserType } from './data-store_types';
 import { messageIdGenerator, positionIdGenerator } from '../../data/RandomGenerator';
 import { generateCurrentUTC } from '../../scripts/DateTime';
 

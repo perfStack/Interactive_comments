@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { BaseCommentType, ReplyCommentType } from '../../../data/data-store_types';
+  import type { BaseCommentType, ReplyCommentType } from '../../scripts/data-store_types';
 
   import { createEventDispatcher, setContext } from 'svelte';
   import NewComment from './components/NewComment.svelte';

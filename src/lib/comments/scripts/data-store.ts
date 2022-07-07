@@ -2,12 +2,12 @@ import type { BaseCommentType, UserType } from './data-store_types';
 import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
 
-import { LOCAL_STORAGE_KEY } from '$lib/config/LocalStorageKeys';
+import { LOCAL_STORAGE_KEY } from '../../config/LocalStorageKeys';
 import {
   getDataFromLocalStorage,
   NoLocalStorageError,
   setDataToLocalStorage,
-} from './LocalStorage';
+} from '../../data/LocalStorage';
 
 const hardCodedData: {
   currentUser: UserType;

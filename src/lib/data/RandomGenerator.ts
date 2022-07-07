@@ -1,4 +1,4 @@
-import type { BaseCommentType, ReplyCommentType } from './data-store_types';
+import type { BaseCommentType, ReplyCommentType } from '../comments/scripts/data-store_types';
 import { randomGenerator } from '$lib/helpers/helper';
 import { getDataFromLocalStorage, setDataToLocalStorage } from './LocalStorage';
 import { LOCAL_STORAGE_KEY } from '../config/LocalStorageKeys';
@@ -246,13 +246,13 @@ class PositionGenerator {
   getPosition(commentObj: BaseCommentType | ReplyCommentType | number) {
     if (typeof commentObj === 'number') {
       const position = this.positionMap.get(commentObj);
-      if (!position) throw new Error('Can\'t find the position of the reply comment');
+      if (!position) throw new Error("Can't find the position of the reply comment");
       return position;
     }
 
     const replyPositionId = commentObj.position;
     const replyPosition = this.positionMap.get(replyPositionId);
-    if (!replyPosition) throw new Error('Can\'t find the position of the reply comment');
+    if (!replyPosition) throw new Error("Can't find the position of the reply comment");
 
     return replyPosition;
   }

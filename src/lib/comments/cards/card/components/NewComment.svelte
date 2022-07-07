@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { UserType } from '../../../../data/data-store_types';
+  import type { UserType } from '../../../scripts/data-store_types';
   import { createEventDispatcher, getContext } from 'svelte';
 
   import AvatarImg from './AvatarImg.svelte';
