@@ -4,7 +4,7 @@
 
   import AvatarImg from './AvatarImg.svelte';
   import CustomButton from './CustomButton.svelte';
-  import { currentUserContextKey } from '../../../Scripts/Comments-context';
+  import { currentUserContextKey } from '../../../scripts/Comments-context';
 
   export let btnContent: string;
   export let textAreaRows = 5;

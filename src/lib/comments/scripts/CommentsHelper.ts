@@ -1,6 +1,6 @@
 import type { BaseCommentType, ReplyCommentType, UserType } from '../../data/data-store_types';
 import { messageIdGenerator, positionIdGenerator } from '../../data/RandomGenerator';
-import { generateCurrentUTC } from '../cards/card/counter/scripts/timer';
+import { generateCurrentUTC } from '../../scripts/DateTime';
 
 // todo - updated score to be set to local storage
 // todo - update the score to check time when score is a tie

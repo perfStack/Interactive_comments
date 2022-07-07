@@ -3,13 +3,13 @@
 
   import { createEventDispatcher, setContext } from 'svelte';
   import NewComment from './components/NewComment.svelte';
-  import { moveCursorToTheEnd } from '../../Scripts/CommentsHelper';
+  import { moveCursorToTheEnd } from '../../scripts/CommentsHelper';
   import CustomButton from './components/CustomButton.svelte';
   import Counter from './counter/Counter.svelte';
-  import { thisPostDataContextKey, thisTimerInstance } from '../../Scripts/Comments-context';
+  import { thisPostDataContextKey, thisTimerInstance } from '../../scripts/Comments-context';
   import CommentCardHead from './header/CommentCardHead.svelte';
   import ReplyingTo from './components/ReplyingTo.svelte';
-  import { Timer } from './counter/scripts/timer';
+  import { Timer } from './header/scripts/timer';
 
   export let commentData: BaseCommentType | ReplyCommentType;
   export let isChild = false;

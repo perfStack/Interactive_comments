@@ -1,5 +1,6 @@
 import type { Writable } from 'svelte/store';
 import { writable } from 'svelte/store';
+import { generateCurrentUTC } from '../../../../../scripts/DateTime';
 
 /**
  * Timer class to keep track of the difference between the current time and the time,
@@ -237,21 +238,4 @@ export class Timer {
         console.error('Timer is not functioning properly');
     }
   }
-}
-
-/**
- * Function to generate a new Date object with the current UTC date and time.
- */
-export function generateCurrentUTC() {
-  const currentDate = new Date();
-  return new Date(
-    Date.UTC(
-      currentDate.getUTCFullYear(),
-      currentDate.getUTCMonth(),
-      currentDate.getUTCDate(),
-      currentDate.getUTCHours(),
-      currentDate.getUTCMinutes(),
-      currentDate.getUTCSeconds(),
-    ),
-  );
 }

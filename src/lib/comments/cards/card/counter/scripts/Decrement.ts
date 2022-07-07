@@ -1,7 +1,7 @@
 import type { BaseCommentType, ReplyCommentType } from '../../../../../data/data-store_types';
 import { positionIdGenerator } from '../../../../../data/RandomGenerator';
-import { findParentComment } from '../../../../Scripts/CommentsHelper';
-import { setNestedIndex } from '../../../../Scripts/Modify';
+import { findParentComment } from '../../../../scripts/CommentsHelper';
+import { setNestedIndex } from '../../../../scripts/Modify';
 
 /**
  * Function to increment the position of the comment

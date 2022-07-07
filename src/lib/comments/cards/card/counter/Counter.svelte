@@ -7,7 +7,7 @@
   import {
     commentsDataContextKey,
     thisPostDataContextKey,
-  } from '../../../Scripts/Comments-context';
+  } from '../../../scripts/Comments-context';
   import { incrementCommentHelper } from './scripts/Increment';
   import { decrementCommentHelper } from './scripts/Decrement';
 
