@@ -20,11 +20,21 @@
     // "no-console": 1,
     "object-curly-spacing": ["error", "always"],
     "valid-jsdoc": 0,
-    // "brace-style": ["warn","stroustrup"],
     "brace-style": "off",
     "max-len": ["error", { "code": 100 }],
     "no-tabs": ["error", { "allowIndentationTabs": true }],
     "indent": "off"
+    // "brace-style": ["warn","stroustrup"],
+    // "sort-imports": [
+    //   "warn",
+    //   {
+    //     "ignoreCase": true,
+    //     "ignoreDeclarationSort": false,
+    //     "ignoreMemberSort": false,
+    //     "memberSyntaxSortOrder": ["none", "single", "multiple", "all"],
+    //     "allowSeparatedGroups": false
+    //   }
+    // ]
   },
   "settings": {
     "svelte3/typescript": true // load TypeScript as peer dependency
