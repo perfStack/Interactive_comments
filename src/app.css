@@ -32,6 +32,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   max-width: 140rem;
+  position: relative;
 }
 
 p {
@@ -52,7 +53,7 @@ button {
   @supports not (clip-path: polygon(0 0, 0 0, 0 0)) {
     clip: rect(0 0 0 0) !important;
   }
-  /* 
+  /*
   position: absolute to take the content out of flow
   Height and width are set to 1px/.1rem so that it is accessible to screen readers
   // using margin -1px/-.1rem and other attributes ensures content is hidden from sighted users
