@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { UserType } from '../../../scripts/data/data-store_types';
   import { createEventDispatcher, getContext } from 'svelte';
   import { slide } from 'svelte/transition';
+  import type { UserType } from '../../../scripts/data/data-store_types';
 
+  import { currentUserContextKey } from '../../../scripts/context/CommentsContext';
   import AvatarImg from './AvatarImg.svelte';
   import CustomButton from './CustomButton.svelte';
-  import { currentUserContextKey } from '../../../scripts/context/CommentsContext';
 
   export let btnContent: string;
   export let textAreaRows = 5;

@@ -3,13 +3,13 @@
 
   import { createEventDispatcher, setContext } from 'svelte';
   import { slide } from 'svelte/transition';
-  import NewComment from './components/NewComment.svelte';
   import { moveCursorToTheEnd } from '../../scripts/CommentsHelper';
-  import CustomButton from './components/CustomButton.svelte';
-  import Counter from './counter/Counter.svelte';
   import { thisPostDataContextKey, thisTimerInstance } from '../../scripts/context/CommentsContext';
-  import CommentCardHead from './header/CommentCardHead.svelte';
+  import CustomButton from './components/CustomButton.svelte';
+  import NewComment from './components/NewComment.svelte';
   import ReplyingTo from './components/ReplyingTo.svelte';
+  import Counter from './counter/Counter.svelte';
+  import CommentCardHead from './header/CommentCardHead.svelte';
   import { Timer } from './header/scripts/timer';
 
   export let commentData: BaseCommentType | ReplyCommentType;
@@ -22,7 +22,6 @@
   let contentEditable = false;
   let contentValue: HTMLElement;
   let contentLengthValid = true;
-  // todo fix the above
   // todo make replying-to smooth scroll to the user
 
   const timerFunc = new Timer(commentData.createdAtDate);

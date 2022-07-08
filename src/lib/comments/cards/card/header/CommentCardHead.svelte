@@ -1,22 +1,29 @@
 <script lang="ts">
   import type { BaseCommentType, ReplyCommentType } from '../../../scripts/data/data-store_types';
+  import type { Timer } from './scripts/timer';
+
   import { createEventDispatcher, getContext, onDestroy } from 'svelte';
   import {
     thisPostDataContextKey,
     thisTimerInstance,
   } from '../../../scripts/context/CommentsContext';
-  import AvatarImg from '../components/AvatarImg.svelte';
   import { currentUserStore } from '../../../scripts/data/data-store';
+  import AvatarImg from '../components/AvatarImg.svelte';
   import CardIconShake from '../components/CardIconShake.svelte';
-  import { Timer } from './scripts/timer';
+  import FullScreenConfirmationModal from '../components/FullScreenConfirmationModal.svelte';
 
   export let contentEditable: boolean;
 
   const commentData: ReplyCommentType | BaseCommentType = getContext(thisPostDataContextKey);
-  const timerFunction: Timer = getContext(thisTimerInstance);
-  timerFunction.setIntervalTimer();
   const username = commentData.user.username;
   const userImgPath = commentData.user.image;
+  const deleteConfirmationMessage =
+    // eslint-disable-next-line max-len
+    'Are you sure you want to delete this comment? This will remove the comment and cannot be undone.';
+  let awaitConfirmation = false;
+
+  const timerFunction: Timer = getContext(thisTimerInstance);
+  timerFunction.setIntervalTimer();
 
   let countValue: string;
   const unsubscribe = timerFunction.timerValueStore.subscribe((value) => {
@@ -49,10 +56,30 @@
    * @description - This function is used to delete the post,
    */
   function deleteBtnHandler() {
+    // svelteDispatchEvent('deleteComment');
+    awaitConfirmation = true;
+  }
+
+  /**
+   *
+   */
+  function deleteConfirmationHandler() {
     svelteDispatchEvent('deleteComment');
+    awaitConfirmation = false;
   }
 </script>
 
+{#if awaitConfirmation}
+  <FullScreenConfirmationModal
+    heading="Delete Comment"
+    message="{deleteConfirmationMessage}"
+    cancelBtnText="No,Cancel"
+    confirmBtnText="Yes,Delete"
+    confirmBtnClr="var(--clr-pri-softRed)"
+    on:confirmBtn="{deleteConfirmationHandler}"
+    on:cancelBtn="{() => (awaitConfirmation = false)}"
+  />
+{/if}
 <div class="cont">
   {#if !commentData.isDeleted}
     <div class="pic-cont">
