@@ -42,6 +42,13 @@ export class Timer {
   }
 
   /**
+   * Function to return the createdAtDate value of the comment
+   */
+  get createdAtDateOfMsg() {
+    return this.createdAtDate;
+  }
+
+  /**
    * Function to determine if the time difference is greater than or equal to 1
    * @private
    */

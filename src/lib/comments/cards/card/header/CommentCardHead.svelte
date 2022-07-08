@@ -2,7 +2,7 @@
   import type { BaseCommentType, ReplyCommentType } from '../../../scripts/data/data-store_types';
   import type { Timer } from './scripts/timer';
 
-  import { createEventDispatcher, getContext, onDestroy } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
   import {
     thisPostDataContextKey,
     thisTimerInstance,
@@ -11,6 +11,7 @@
   import AvatarImg from '../components/AvatarImg.svelte';
   import CardIconShake from '../components/CardIconShake.svelte';
   import FullScreenConfirmationModal from '../components/FullScreenConfirmationModal.svelte';
+  import Timestamp from './Timestamp.svelte';
 
   export let contentEditable: boolean;
 
@@ -24,13 +25,6 @@
 
   const timerFunction: Timer = getContext(thisTimerInstance);
   timerFunction.setIntervalTimer();
-
-  let countValue: string;
-  const unsubscribe = timerFunction.timerValueStore.subscribe((value) => {
-    countValue = value;
-  });
-
-  onDestroy(unsubscribe);
 
   // console.log(timestamp);
 
@@ -93,7 +87,8 @@
       {#if isCurrentUserPost}
         <p class="user-status">you</p>
       {/if}
-      <p class="timestamp">{countValue} ago</p>
+      <!-- <p class="timestamp">{countValue} ago</p> -->
+      <Timestamp timerFunction="{timerFunction}" />
     </div>
 
     <!-- Check if the user is logged in,if so then show edit and delete button on their own posts-->
@@ -159,12 +154,6 @@
     margin-left: 0.6rem;
     margin-top: 0.2rem;
     padding: 0 0.4rem 0.2rem;
-  }
-
-  .timestamp {
-    color: var(--clr-nutrl-grayBlue);
-    font-weight: 500;
-    margin-left: 1.2rem;
   }
 
   .reply-cont {
