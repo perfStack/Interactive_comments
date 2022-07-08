@@ -1,6 +1,6 @@
+import { generateCurrentUTC } from '../../scripts/DateTime';
 import type { BaseCommentType, ReplyCommentType, UserType } from './data/data-store_types';
 import { messageIdGenerator, positionIdGenerator } from './data/RandomGenerator';
-import { generateCurrentUTC } from '../../scripts/DateTime';
 
 // todo - updated score to be set to local storage
 // todo - update the score to check time when score is a tie
@@ -13,7 +13,7 @@ import { generateCurrentUTC } from '../../scripts/DateTime';
 export function findComment(
   commentArr: BaseCommentType[],
   commentPositionId: number,
-): [BaseCommentType | ReplyCommentType, boolean] {
+): BaseCommentType | ReplyCommentType {
   try {
     // Split the comment as it can be a nested one, with each number denoting the nested index.
     // eg 1.4.3
@@ -22,22 +22,20 @@ export function findComment(
     // Check if the index of base message checks out ot be valid in existing arr
     // as no nested message will be found without a valid base message
     // parseInt() - 1 cause id start from 1
-    const messageIndex = parseInt(commentIdArr[0], 10) - 1;
-    const baseCommentObj = commentArr[messageIndex];
-
+    const firstIndex = parseInt(commentIdArr[0], 10) - 1;
     // This is for any nested comment to be found
-    let commentObj: ReplyCommentType | undefined;
+    let commentObj = commentArr[firstIndex];
 
     // Check if no base comment(comment with depth=1 i.e. no nested comment) then trow new Error
-    if (!baseCommentObj) throw new Error(`Can't find any base comment with id ${commentIdArr[0]}`);
+    if (!commentObj) throw new Error(`Can't find any base comment with id ${commentIdArr[0]}`);
 
-    // Check if the id relates to a nested comment if so then use the baseCommentObj found earlier,
-    // use the replies' property to traverse to the nested message,
-    // all further message will be replies
+    // Check if the id relates to a nested comment if so then loop through the replies' property,
+    // until the (last index)[parentComment] is reached
     if (commentIdArr.length > 1) {
       for (let i = 1; i < commentIdArr.length; i++) {
         const messageIndex = parseInt(commentIdArr[i], 10) - 1;
-        commentObj = baseCommentObj.replies[messageIndex];
+        commentObj = commentObj?.replies[messageIndex];
+
         if (!commentObj) {
           throw new Error(
             `Can't find nested comment ${commentPosition[i]} with id ${commentPosition}`,
@@ -45,7 +43,9 @@ export function findComment(
         }
       }
     }
-    return commentObj ? [commentObj, true] : [baseCommentObj, false];
+
+    // Check if the comment is a reply comment or a base comment and return the comment object
+    return commentObj;
   } catch (error) {
     throw error;
   }
@@ -148,7 +148,7 @@ export function removeCommentConstructively(
   commentArr: BaseCommentType[],
   commentPositionId: number,
 ) {
-  const [commentObj] = findComment(commentArr, commentPositionId);
+  const commentObj = findComment(commentArr, commentPositionId);
 
   commentObj.isDeleted = true;
   commentObj.content = 'This comment has been deleted';
