@@ -8,8 +8,6 @@
   import CustomButton from './CustomButton.svelte';
 
   export let btnContent: string;
-  export let textAreaRows = 5;
-  export let textAreaCols = 66;
   export let autoFocusable = true;
   export let disableWarningText = false;
 
@@ -46,11 +44,12 @@
         class="new-cc__textarea"
         name="new-content"
         id="new-content"
-        cols="{textAreaCols}"
-        rows="{textAreaRows}"
         spellcheck="true"
         autofocus="{autoFocusable}"
         bind:value="{messageContent}"></textarea>
+      {#if !disableWarningText && isContentInvalid}
+        <p class="text-error">Please enter some text to post</p>
+      {/if}
     </div>
     <div class="new-cc__btn-cont">
       <CustomButton
@@ -60,9 +59,6 @@
       />
     </div>
   </div>
-  {#if !disableWarningText && isContentInvalid}
-    <p class="text-error">Please enter some text to post</p>
-  {/if}
 </div>
 
 <style lang="scss">
@@ -77,24 +73,31 @@
       align-items: flex-start;
       display: flex;
       justify-content: space-between;
-      padding: $padding-box;
+      padding: $padding-box $padding-box ($padding-box - 0.5rem);
     }
 
     &__input-cont {
       display: flex;
       flex-direction: column;
+      height: 9rem;
+      width: 70%;
     }
 
     &__textarea {
       border: 1px solid var(--clr-nutrl-grayBlue);
       border-radius: 4px;
+      color: var(--clr-nutrl-darkBlue);
+      font-family: Rubik, sans-serif;
+      font-size: 1.6rem;
+      height: 100%;
+      padding: 0.3rem 0.6rem;
       resize: none;
+      width: 100%;
     }
   }
 
   .text-error {
     color: var(--clr-pri-softRed);
-    margin-top: ($padding-box - 0.5rem) * -1;
-    padding-left: 1.5rem;
+    margin-top: 0.1rem;
   }
 </style>
