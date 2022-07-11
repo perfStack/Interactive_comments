@@ -23,7 +23,8 @@
     "brace-style": "off",
     "max-len": ["error", { "code": 100 }],
     "no-tabs": ["error", { "allowIndentationTabs": true }],
-    "indent": "off"
+    "indent": "off",
+    "quotes": ["warn", "single", { "avoidEscape": true }]
     // "brace-style": ["warn","stroustrup"],
     // "sort-imports": [
     //   "warn",
