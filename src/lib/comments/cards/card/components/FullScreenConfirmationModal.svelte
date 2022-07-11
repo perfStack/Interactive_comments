@@ -19,7 +19,11 @@
   /**
    * Function to handle cancel button click event
    */
-  function onCancelEventHandler() {
+  function onCancelEventHandler(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    // If the click originated from the content box or it's descendent, then don't close the modal
+    if (!target || target.closest('.content')) return;
+
     svelteEventDispatcher('cancelBtn');
   }
 </script>
