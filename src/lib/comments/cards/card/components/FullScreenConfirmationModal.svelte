@@ -19,7 +19,14 @@
   /**
    * Function to handle cancel button click event
    */
-  function onCancelEventHandler(event: MouseEvent) {
+  function onCancelEventHandler() {
+    svelteEventDispatcher('cancelBtn');
+  }
+
+  /**
+   * Function to handle click event on the backdrop
+   */
+  function onBackgroundClickEvent(event: MouseEvent) {
     const target = event.target as HTMLElement;
     // If the click originated from the content box or it's descendent, then don't close the modal
     if (!target || target.closest('.content')) return;
@@ -28,7 +35,7 @@
   }
 </script>
 
-<div class="body-blur" on:click="{onCancelEventHandler}">
+<div class="body-blur" on:click="{onBackgroundClickEvent}">
   <div class="content">
     <div class="heading">
       <h2>{heading}</h2>
