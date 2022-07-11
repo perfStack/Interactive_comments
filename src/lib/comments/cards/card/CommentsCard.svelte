@@ -150,7 +150,7 @@
 
   <!-- Show the reply box -->
   {#if showReply}
-    <NewComment btnContent="reply" on:replyEvent="{replyEventHandler}" />
+    <NewComment btnContent="reply" on:postEvent="{replyEventHandler}" />
   {/if}
 
   <slot />

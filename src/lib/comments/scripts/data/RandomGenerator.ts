@@ -1,94 +1,7 @@
-import type { BaseCommentType, ReplyCommentType } from './data-store_types';
+import { LOCAL_STORAGE_KEY } from '../../../scripts/config/LocalStorageKeys';
 import { randomGenerator } from '../../../scripts/helpers/helper';
 import { getDataFromLocalStorage, setDataToLocalStorage } from '../../../scripts/LocalStorage';
-import { LOCAL_STORAGE_KEY } from '../../../scripts/config/LocalStorageKeys';
-
-/**
- * Function to generate a unique id.
- */
-class IdGenerator {
-  private readonly minNum: number;
-  private readonly maxNum: number;
-  private readonly localStorageKey: string;
-  private readonly messageIdSet: Set<number>;
-
-  /**
-   * constructor function to initialize the IdGenerator
-   * @param minNum
-   * @param maxNum
-   * @param localStorageKey
-   * @param messageIdSet
-   */
-  constructor(minNum: number, maxNum: number, localStorageKey: string, messageIdSet: Set<number>) {
-    this.minNum = minNum;
-    this.maxNum = maxNum;
-    this.localStorageKey = localStorageKey;
-    this.messageIdSet = this.getIdPoolFromLocalStorage() || messageIdSet;
-  }
-
-  /**
-   *
-   * @returns - The set of message ids
-   */
-  getIdPoolFromLocalStorage(): Set<number> | undefined {
-    try {
-      if (!localStorage) return;
-      const localData = getDataFromLocalStorage(this.localStorageKey);
-      if (localData) {
-        return new Set<number>(JSON.parse(localData));
-      } else {
-        return this.messageIdSet;
-      }
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  /**
-   * Function to set the set of message ids to local storage
-   */
-  setIdPoolToLocalStorage() {
-    try {
-      if (localStorage) {
-        setDataToLocalStorage(this.localStorageKey, JSON.stringify([...this.messageIdSet]));
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * Function to remove the given id from the set
-   * @param commentsId - The comments id to be removed from the set
-   */
-  deleteId(commentsId: number) {
-    try {
-      this.messageIdSet.delete(commentsId);
-      if (localStorage) this.setIdPoolToLocalStorage();
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  /**
-   * Function to generate a unique id for comments
-   */
-  generateId(): number {
-    try {
-      let randomNum = randomGenerator(this.minNum, this.maxNum);
-
-      while (this.messageIdSet.has(randomNum)) {
-        randomNum = randomGenerator(this.minNum, this.maxNum);
-      }
-
-      this.messageIdSet.add(randomNum);
-      if (localStorage) this.setIdPoolToLocalStorage();
-      return randomNum;
-    } catch (error) {
-      throw error;
-    }
-  }
-}
+import type { BaseCommentType, ReplyCommentType } from './data-store_types';
 
 /**
  * Class to generate, update and delete unique id for comments id .
@@ -277,31 +190,39 @@ class PositionGenerator {
   }
 
   /**
-   * Function to generate a position for the new comment
-   * @param commentParent
+   * Function to generate the actual position of a comment
+   * @param parentPosition - The parent position of the reply comment
+   * @param existingComments - The existing comments in the level
    */
-  generateCommentPosition(commentParent: BaseCommentType | ReplyCommentType) {
-    const commentParentPosition = positionIdGenerator.positionMap.get(commentParent.position);
-    if (!commentParentPosition) throw new Error('Comment parent position not found');
-
-    const commentParentPositionArr = commentParentPosition.split('.');
+  generateCommentPosition(parentPosition: string, existingComments: number) {
+    const commentParentPositionArr = parentPosition.split('.');
+    if (commentParentPositionArr.length < 1) throw new Error('Invalid parent position');
     // Position is 1 based
-    const noOfReplies = commentParent.replies.length + 1;
+    const noOfReplies = existingComments;
     const commentPosition = commentParentPositionArr.concat(noOfReplies.toString()).join('.');
 
-    console.log('commentPosition', commentPosition);
     if (localStorage) this.setIdPoolToLocalStorage();
     return commentPosition;
   }
 
   /**
-   * Function to generate a new position id and position for a new comment
-   * @param commentParent
+   * Function to generate a new position id as well as actual position for the new comment
+   * @param parentPosition - The position of the parent comment, '' if it is a top level comment
+   * @param existingComments - The number of existing comments on that level
+   * @param isBaseComment - Whether the comment is a base comment or a reply comment
    */
-  generateIdAndPosition(commentParent: BaseCommentType | ReplyCommentType) {
+  generateIdAndPosition(parentPosition: string, existingComments: number, isBaseComment: boolean) {
     try {
       const positionKey = this.generateId();
-      this.positionMap.set(positionKey, this.generateCommentPosition(commentParent));
+      if (isBaseComment) {
+        this.positionMap.set(positionKey, existingComments.toString());
+      } else {
+        this.positionMap.set(
+          positionKey,
+          this.generateCommentPosition(parentPosition, existingComments),
+        );
+      }
+
       if (localStorage) this.setIdPoolToLocalStorage();
       return positionKey;
     } catch (error) {

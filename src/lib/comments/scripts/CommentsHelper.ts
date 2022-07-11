@@ -199,29 +199,70 @@ function moveRemainingPostUp(indexToStart: number, commentObj: BaseCommentType, 
 }
 
 /**
- * Function to return a new comment object with the provided content
- * @param commentParent
- * @param currentUserData
- * @param msgContent
+ * Function to generate a new comment
+ * @param currentUserData - The current user data
+ * @param msgContent - The message content
+ * @param parentPositionId - The position of the parent comment if any else null
+ * @param existingComments - The no of existing comments on a particular level
+ * @param replyingToUserName - The user name of the user who is replying to
+ * @returns newComment - The new comment object
  */
 export function generateNewComment(
-  commentParent: BaseCommentType | ReplyCommentType,
   currentUserData: UserType,
   msgContent: string,
-): ReplyCommentType {
+  parentPositionId: number | null,
+  existingComments: number,
+  replyingToUserName?: string,
+): ReplyCommentType | BaseCommentType {
   try {
-    return {
+    let finalComment: BaseCommentType | ReplyCommentType | undefined;
+    let parentPosition: string;
+    // position is 1 based, so we need to add 1 to the no of existing comments
+    const commentPosition = existingComments + 1;
+    if (parentPositionId) {
+      parentPosition = positionIdGenerator.getPosition(parentPositionId);
+    } else {
+      parentPosition = '';
+    }
+
+    const newCommentSkeleton = {
       id: messageIdGenerator.generateId(),
-      position: positionIdGenerator.generateIdAndPosition(commentParent),
       isDeleted: false,
       content: msgContent,
       user: currentUserData,
       createdAt: 'now',
       createdAtDate: generateCurrentUTC(),
       score: 0,
-      replies: [], // empty array for replies
-      replyingTo: commentParent.user.username,
+      replies: [],
     };
+
+    // If the comment has replyingTo, then it is a reply comment
+    if (replyingToUserName) {
+      const replyComment = {
+        ...newCommentSkeleton,
+        position: positionIdGenerator.generateIdAndPosition(
+          parentPosition,
+          existingComments + 1,
+          false,
+        ),
+        replyingTo: replyingToUserName,
+      };
+      finalComment = replyComment;
+    }
+
+    // If the comment is not a reply, then it is a base comment.
+    // If earlier it was a found to be a reply comment, then skip this step.
+    if (!finalComment) {
+      const newBaseComment: BaseCommentType = {
+        ...newCommentSkeleton,
+        position: positionIdGenerator.generateIdAndPosition(parentPosition, commentPosition, true),
+      };
+      finalComment = newBaseComment;
+    }
+
+    // If the comment is neither a reply nor a base comment, then throw an error.
+    if (!finalComment) throw new Error('Comment not generated');
+    return finalComment;
   } catch (error) {
     throw error;
   }

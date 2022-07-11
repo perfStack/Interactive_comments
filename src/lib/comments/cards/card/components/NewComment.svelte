@@ -24,7 +24,9 @@
    * Function to handle the reply event on an existing message.
    */
   function replyEventHandler() {
-    svelteDispatcher('replyEvent', messageContent);
+    svelteDispatcher('postEvent', messageContent);
+    // Clear textarea content on submit event.
+    messageContent = '';
   }
 </script>
 

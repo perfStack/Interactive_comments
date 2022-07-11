@@ -12,6 +12,7 @@
   } from './scripts/CommentsHelper';
   import { commentsDataContextKey, currentUserContextKey } from './scripts/context/CommentsContext';
   import { commentsStore, currentUserStore } from './scripts/data/data-store';
+  import type { ReplyCommentType } from './scripts/data/data-store_types';
 
   let commentsData = $commentsStore;
   const currentUserData = $currentUserStore;
@@ -24,13 +25,41 @@
    * @param event
    */
   function replyCmntHandler(event: CustomEvent) {
-    const { msgPosition, msgContent } = event.detail;
+    const {
+      msgPosition,
+      msgContent,
+    }: {
+      msgPosition: number;
+      msgContent: string;
+    } = event.detail;
 
     const commentParent = findComment(commentsData, msgPosition);
     if (!commentParent) throw new Error('Comment parent not found');
 
     // Generate new comment and make svelte update the component DOM
-    commentParent.replies.push(generateNewComment(commentParent, currentUserData, msgContent));
+    commentParent.replies.push(
+      generateNewComment(
+        currentUserData,
+        msgContent,
+        commentParent.position,
+        commentParent.replies.length,
+        commentParent.user.username,
+      ) as ReplyCommentType,
+    );
+    commentsData = commentsData;
+
+    setDataToLocalStorage(LOCAL_STORAGE_KEY.commentsData, JSON.stringify(commentsData));
+  }
+
+  /**
+   * Function to handle the reply comment event
+   * @param event
+   */
+  function postNewCmntHandler(event: CustomEvent) {
+    const msgContent = event.detail;
+
+    // Generate new comment and make svelte update the component DOM
+    commentsData.push(generateNewComment(currentUserData, msgContent, null, commentsData.length));
     commentsData = commentsData;
 
     setDataToLocalStorage(LOCAL_STORAGE_KEY.commentsData, JSON.stringify(commentsData));
@@ -74,4 +103,9 @@
   on:replyEvent="{replyCmntHandler}"
   on:modifyCommentScore="{modifyScoreHandler}"
 />
-<NewComment btnContent="send" autoFocusable="{false}" disableWarningText="{true}" />
+<NewComment
+  btnContent="send"
+  autoFocusable="{false}"
+  disableWarningText="{true}"
+  on:postEvent="{postNewCmntHandler}"
+/>
