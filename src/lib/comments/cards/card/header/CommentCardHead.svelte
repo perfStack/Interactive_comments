@@ -12,6 +12,11 @@
   import CardIconShake from '../components/CardIconShake.svelte';
   import FullScreenConfirmationModal from '../components/FullScreenConfirmationModal.svelte';
   import Timestamp from './Timestamp.svelte';
+  // import icons
+  import iconDelete from '$lib/assets/img/icons/icon-delete.svg';
+  import iconEdit from '$lib/assets/img/icons/icon-edit.svg';
+  import iconReply from '$lib/assets/img/icons/icon-reply.svg';
+  // import icons
 
   export let contentEditable: boolean;
 
@@ -95,14 +100,14 @@
     {#if isCurrentUserPost && !commentData.isDeleted}
       <div class="modify-cont">
         <CardIconShake
-          imgSrc="/img/icons/icon-delete.svg"
+          imgSrc="{iconDelete}"
           descriptionText="Delete"
           isDisabled="{contentEditable}"
           isDelete="{true}"
           on:click="{deleteBtnHandler}"
         />
         <CardIconShake
-          imgSrc="/img/icons/icon-edit.svg"
+          imgSrc="{iconEdit}"
           descriptionText="edit"
           isDisabled="{contentEditable}"
           on:click="{editBtnHandler}"
@@ -110,7 +115,7 @@
       </div>
     {:else if !commentData.isDeleted}
       <div class="reply-cont" on:click="{replyHandler}">
-        <CardIconShake imgSrc="/img/icons/icon-reply.svg" descriptionText="reply" />
+        <CardIconShake imgSrc="{iconReply}" descriptionText="reply" />
       </div>
     {/if}
   </div>

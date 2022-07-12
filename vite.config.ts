@@ -1,5 +1,4 @@
 // vite.config.js
-// @ts-expect-error: Can't find module 'vite'
 import { sveltekit } from '@sveltejs/kit/vite';
 
 /** @type {import('vite').UserConfig} */
@@ -12,6 +11,18 @@ const config = {
     host: '127.0.0.1',
     port: 8951,
     strictPort: true,
+  }, // build
+  build: {
+    emptyOutDir: true,
+    target: ['es2017'],
+    // minify: 'terser',
+    rollupOptions: {
+      // Sveltekit will override this
+      // https://github.com/sveltejs/kit/issues/1410
+      output: {
+        assetFileNames: '[hash][extname]',
+      },
+    },
   },
 };
 

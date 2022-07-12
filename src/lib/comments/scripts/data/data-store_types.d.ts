@@ -8,7 +8,7 @@ export interface UserType {
   username: string;
 }
 
-export interface BaseCommentType {
+interface BaseCommentType {
   id: number;
   position: number;
   isDeleted: boolean;
@@ -20,11 +20,13 @@ export interface BaseCommentType {
   replies: ReplyCommentType[];
 }
 
-export interface ReplyCommentType extends BaseCommentType {
+interface ReplyCommentType extends BaseCommentType {
   replyingTo: string;
 }
 
-export interface CommentDataType {
+interface CommentDataType {
   currentUser: UserType;
   comments: CommentType[];
 }
+
+export type { ImgType, UserType, BaseCommentType, ReplyCommentType, CommentDataType };
