@@ -12,5 +12,5 @@ export function generateCurrentUTC() {
       currentDate.getUTCMinutes(),
       currentDate.getUTCSeconds(),
     ),
-  );
+  ).valueOf();
 }

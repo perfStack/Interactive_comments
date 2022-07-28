@@ -27,13 +27,13 @@ export class Timer {
   private timeDiff: undefined | number;
   private readonly generateFinalTimeStringInstance = this.generateFinalTimeString.bind(this);
   timerValueStore: Writable<string>;
-  private createdAtDate: Date;
+  private createdAtDate: number;
 
   /**
    * Constructor for Timer instance
    * @param createdAtDate
    */
-  constructor(createdAtDate: Date) {
+  constructor(createdAtDate: number) {
     this.createdAtDate = createdAtDate;
     // Generate the time difference between the current time and the created time
     this.getTimeDifference();
@@ -100,7 +100,7 @@ export class Timer {
   private getTimeDifference() {
     const currentDateUTC = generateCurrentUTC();
 
-    const dateDiffRaw = currentDateUTC.valueOf() - this.createdAtDate.valueOf();
+    const dateDiffRaw = currentDateUTC - this.createdAtDate;
     const yearDiff = Math.trunc(dateDiffRaw / this.year);
     const monthDiff = Math.trunc(dateDiffRaw / this.month);
     const weekDiff = Math.trunc(dateDiffRaw / this.week);
@@ -211,6 +211,7 @@ export class Timer {
     // If an instance of setInterval is already set, then return
     // we only want 1 instance of setInterval per instance of Timer
     if (this.setIntervalInstance) return;
+    console.log('setInterval', this.interval);
 
     // limit max interval delay to week as:- 1 week = 604800000 ms, 1 month = 2592000000 ms
     // MDN: The delay argument is converted to a signed 32-bit integer.

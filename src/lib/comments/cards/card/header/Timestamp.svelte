@@ -4,7 +4,7 @@
 
   export let timerFunction: Timer;
 
-  const fullTimeStamp = timerFunction.createdAtDateOfMsg.toUTCString();
+  const fullTimeStamp = new Date(timerFunction.createdAtDateOfMsg).toUTCString();
   let showFullTimeStamp = false;
 
   let timestamp: string;

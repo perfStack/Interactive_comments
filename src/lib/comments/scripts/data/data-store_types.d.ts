@@ -14,7 +14,7 @@ interface BaseCommentType {
   isDeleted: boolean;
   content: string;
   createdAt: string;
-  createdAtDate: Date;
+  createdAtDate: number;
   score: number;
   user: UserType;
   replies: ReplyCommentType[];
