@@ -10,7 +10,7 @@ const config = {
 
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
-  preprocess: preprocess({ typescript: false, scss: false }),
+  preprocess: preprocess({ typescript: true, scss: true }),
 
   kit: {
     adapter: adapterStatic({
@@ -38,18 +38,18 @@ const config = {
     // },
   },
 
-  vitePlugin: {
-    experimental: {
-      // Use extra preprocessors that delegate style and TypeScript preprocessing
-      // to native Vite plugins.TypeScript will be transformed with esbuild.
-      // Styles will be transformed using Vite's CSS plugin,
-      //  which handles @imports, url() references, PostCSS, CSS Modules,
-      //  and .scss/.sass/.less/.styl/.stylus files.
-      //  Do not use together with TypeScript or style preprocessors from svelte-preprocess as
-      //  attempts to transform the content twice will fail!
-      useVitePreprocess: true,
-    },
-  },
+  // vitePlugin: {
+  //   experimental: {
+  //     // Use extra preprocessors that delegate style and TypeScript preprocessing
+  //     // to native Vite plugins.TypeScript will be transformed with esbuild.
+  //     // Styles will be transformed using Vite's CSS plugin,
+  //     //  which handles @imports, url() references, PostCSS, CSS Modules,
+  //     //  and .scss/.sass/.less/.styl/.stylus files.
+  //     //  Do not use together with TypeScript or style preprocessors from svelte-preprocess as
+  //     //  attempts to transform the content twice will fail!
+  //     useVitePreprocess: true,
+  //   },
+  // },
 };
 
 export default config;
