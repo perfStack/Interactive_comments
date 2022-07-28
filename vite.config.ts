@@ -13,16 +13,16 @@ const config = {
     strictPort: true,
   }, // build
   build: {
-    emptyOutDir: true,
+    // emptyOutDir: true,
     target: ['es2017'],
     // minify: 'terser',
-    rollupOptions: {
-      // Sveltekit will override this
-      // https://github.com/sveltejs/kit/issues/1410
-      output: {
-        assetFileNames: '[hash][extname]',
-      },
-    },
+    // rollupOptions: {
+    //   // Sveltekit will override this
+    //   // https://github.com/sveltejs/kit/issues/1410
+    //   output: {
+    //     assetFileNames: '[hash][extname]',
+    //   },
+    // },
   },
 };
 

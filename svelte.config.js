@@ -20,26 +20,35 @@ const config = {
       fallback: null,
       precompress: false,
     }),
-    paths: {
-      base: isProduction ? '/perfstack' : '',
-    },
+    // paths: {
+    //   base: isProduction ? '/assets/Interactive_comments/dist' : '',
+    // },
+    appDir: 'internal',
+    trailingSlash: 'never',
     prerender: {
       // This can be false if you're using a fallback (i.e. SPA mode)
       default: true,
       enabled: true,
-      crawl: true,
+      // crawl: true,
+      // entries: ['*', '/robots.txt'],
     },
+    // browser: {
+    //   hydrate: true,
+    //   router: false,
+    // },
   },
 
-  experimental: {
-    // Use extra preprocessors that delegate style and TypeScript preprocessing
-    // to native Vite plugins.TypeScript will be transformed with esbuild.
-    // Styles will be transformed using Vite's CSS plugin,
-    //  which handles @imports, url() references, PostCSS, CSS Modules,
-    //  and .scss/.sass/.less/.styl/.stylus files.
-    //  Do not use together with TypeScript or style preprocessors from svelte-preprocess as
-    //  attempts to transform the content twice will fail!
-    useVitePreprocess: true,
+  vitePlugin: {
+    experimental: {
+      // Use extra preprocessors that delegate style and TypeScript preprocessing
+      // to native Vite plugins.TypeScript will be transformed with esbuild.
+      // Styles will be transformed using Vite's CSS plugin,
+      //  which handles @imports, url() references, PostCSS, CSS Modules,
+      //  and .scss/.sass/.less/.styl/.stylus files.
+      //  Do not use together with TypeScript or style preprocessors from svelte-preprocess as
+      //  attempts to transform the content twice will fail!
+      useVitePreprocess: true,
+    },
   },
 };
 
