@@ -99,7 +99,7 @@ const hardCodedData: {
           createdAt: '2 days ago',
           createdAtDate: new Date(Date.UTC(2022, 6, 3, 3, 4, 5)).valueOf(),
           score: 2,
-          replyingTo: 'ramsesmiron',
+          replyingTo: 'maxblagun',
           user: {
             image: {
               png: juliusomoPng,
@@ -119,7 +119,7 @@ const hardCodedData: {
           createdAt: '1 day ago',
           createdAtDate: new Date(Date.UTC(2022, 6, 4, 3, 4, 5)).valueOf(),
           score: 6,
-          replyingTo: 'ramsesmiron',
+          replyingTo: 'maxblagun',
           user: {
             image: {
               png: juliusomoPng,
