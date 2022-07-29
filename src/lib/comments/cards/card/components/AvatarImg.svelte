@@ -10,11 +10,11 @@
 <picture>
   <source srcset="{userImgPath.webp}" type="image/webp" />
   <img
-    width="{imgWidth}px"
-    height="{imgHeight}px"
+    src="{userImgPath.png}"
+    width="{imgWidth}"
+    height="{imgHeight}"
     loading="lazy"
     decoding="async"
-    src="{userImgPath.png}"
     alt="profile picture of {username}"
     class="cc__content-pic"
   />
