@@ -16,8 +16,10 @@
   aria-label="{descriptionText} btn"
   on:click
 >
-  <img class="iconShake__img" src="{imgSrc}" alt="{descriptionText} icon" />
-  <p class="iconShake__content">{descriptionText}</p>
+  <span>
+    <img class="iconShake__img" src="{imgSrc}" alt="{descriptionText} icon" />
+    <p class="iconShake__content">{descriptionText}</p>
+  </span>
 </button>
 
 <style lang="scss">
@@ -30,6 +32,13 @@
     &:hover,
     &:focus-within {
       filter: brightness(170%);
+    }
+
+    > span {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      width: 100%;
     }
 
     &__img {
