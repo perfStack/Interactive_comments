@@ -112,3 +112,6 @@ src/css
 # Disable svelte kit folder
 .svelte-kit
 .vscode
+
+# Local Netlify folder
+.netlify
