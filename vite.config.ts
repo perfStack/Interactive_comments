@@ -16,7 +16,16 @@ const config = {
     // emptyOutDir: true,
     assetsInlineLimit: 0,
     target: ['es2017'],
-    // minify: 'terser',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        // warnings: false,
+        ecma: '2017',
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log'],
+      },
+    },
     // rollupOptions: {
     //   // Sveltekit will override this
     //   // https://github.com/sveltejs/kit/issues/1410
