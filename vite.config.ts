@@ -14,6 +14,7 @@ const config = {
   }, // build
   build: {
     // emptyOutDir: true,
+    assetsInlineLimit: 0,
     target: ['es2017'],
     // minify: 'terser',
     // rollupOptions: {
