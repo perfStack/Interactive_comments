@@ -48,6 +48,7 @@
         id="new-content"
         spellcheck="true"
         autofocus="{autoFocusable}"
+        aria-label="new comment textarea"
         bind:value="{messageContent}"></textarea>
       {#if !disableWarningText && isContentInvalid}
         <p class="text-error">Please enter some text to post</p>

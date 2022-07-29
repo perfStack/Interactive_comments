@@ -4,19 +4,19 @@
   export let dataAction = '';
   export let isDelete = false;
   export let isDisabled = false;
-
 </script>
 
-<!-- Check if dataAction has been provided or else it defaults to empty dtring whis is falsy
+<!-- Check if dataAction has been provided or else it defaults to empty string which is falsy
      if dataAction is passed use descriptionText -->
 <button
   class="iconShake"
-  class:delete={isDelete}
-  data-action={dataAction || descriptionText.toLowerCase()}
-  disabled={isDisabled}
+  class:delete="{isDelete}"
+  data-action="{dataAction || descriptionText.toLowerCase()}"
+  disabled="{isDisabled}"
+  aria-label="{descriptionText} btn"
   on:click
 >
-  <img class="iconShake__img" src={imgSrc} alt="{descriptionText} icon" />
+  <img class="iconShake__img" src="{imgSrc}" alt="{descriptionText} icon" />
   <p class="iconShake__content">{descriptionText}</p>
 </button>
 
@@ -54,7 +54,7 @@
     color: var(--clr-pri-softRed);
     filter: brightness(180%);
 
-    /* Set different values for lisght red delete btn */
+    /* Set different values for light red delete btn */
     &:hover,
     &:focus-within {
       filter: none;

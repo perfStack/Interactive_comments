@@ -1,15 +1,15 @@
 <script lang="ts">
-  import type { BaseCommentType, ReplyCommentType } from '../../../scripts/data/data-store_types';
   import { createEventDispatcher, getContext } from 'svelte';
+  import type { BaseCommentType, ReplyCommentType } from '../../../scripts/data/data-store_types';
 
-  import Incrementer from './Incrementer.svelte';
-  import Decrementer from './Decrementer.svelte';
   import {
     commentsDataContextKey,
     thisPostDataContextKey,
   } from '../../../scripts/context/CommentsContext';
-  import { incrementCommentHelper } from './scripts/Increment';
+  import Decrementer from './Decrementer.svelte';
+  import Incrementer from './Incrementer.svelte';
   import { decrementCommentHelper } from './scripts/Decrement';
+  import { incrementCommentHelper } from './scripts/Increment';
 
   const commentData: ReplyCommentType | BaseCommentType = getContext(thisPostDataContextKey);
   const globalCommentsData: BaseCommentType[] = getContext(commentsDataContextKey);
@@ -45,7 +45,7 @@
 
 <div class="counter">
   <div class="counter__icon-cont counter__icon-cont--1" on:click="{increment}">
-    <button class="counter__btn" disabled="{isDeleted}">
+    <button class="counter__btn" aria-label="increment btn" disabled="{isDeleted}">
       <Incrementer isDisabled="{isDeleted}" />
     </button>
   </div>
@@ -53,7 +53,7 @@
     <p>{commentData.score}</p>
   </div>
   <div class="counter__icon-cont counter__icon-cont--2" on:click="{decrement}">
-    <button class="counter__btn" disabled="{isDeleted}">
+    <button class="counter__btn" aria-label="decrement btn" disabled="{isDeleted}">
       <Decrementer isDisabled="{isDeleted}" />
     </button>
   </div>
