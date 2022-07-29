@@ -15,7 +15,7 @@
   onDestroy(unsubscribe);
 </script>
 
-<span
+<div
   class="timestamp-cont"
   on:mouseenter="{() => (showFullTimeStamp = true)}"
   on:mouseleave="{() => (showFullTimeStamp = false)}"
@@ -24,7 +24,7 @@
   <div class="timestamp-full" class:visually-hidden="{!showFullTimeStamp}">
     <p>{fullTimeStamp}</p>
   </div>
-</span>
+</div>
 
 <style lang="scss">
   .timestamp {
