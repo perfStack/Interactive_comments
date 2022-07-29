@@ -18,7 +18,7 @@
 >
   <span>
     <img class="iconShake__img" src="{imgSrc}" alt="{descriptionText} icon" />
-    <p class="iconShake__content">{descriptionText}</p>
+    <span class="iconShake__content">{descriptionText}</span>
   </span>
 </button>
 
