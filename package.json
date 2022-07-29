@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "start": "vite --config vite.config.ts dev",
-    "build": "vite build && custom_config/post-build.sh",
+    "build": "vite build",
     "package": "vite package",
     "preview": "vite preview",
     "prepare": "vite sync",
